@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    body,dl,dt,dd,input,div{padding: 0; margin: 0;}
+    dl{width: 190px; margin: 0 auto; border: 1px solid #000; border-radius: 3px; padding: 0 5px;}
+    dl dt{height: 40px; line-height: 40px; border-bottom: 1px solid #000; padding: 0 5px;}
+    dl dt label{font-size: 12px; font-weight: bold; margin-left:5px;}
+    dl dt a{font-size: 12px; text-decoration: none; color: blue;}
+    dl dd div{height: 30px; line-height: 30px; padding: 0 5px; font-size: 14px;}
+    dl dd div label{margin-left: 5px;}
+</style>
+<script>
+    window.onload = function(){
+        var oAll = document.getElementById("checkAll");
+        var oRev = document.getElementById("reverseCheck");
+        var aCheckBox = document.getElementsByTagName("dd")[0].getElementsByTagName("input");
+        oAll.onclick = function(){
+            for(var i = 0,len = aCheckBox.length;i < len;i++){
+                aCheckBox[i].checked = this.checked;
+            }
+        };
+        oRev.onclick = function(){
+            for(var i = 0,len = aCheckBox.length;i < len;i++){
+                aCheckBox[i].checked = !aCheckBox[i].checked;
+            }
+			isAll();
+        };
+        function isAll(){
+            for(var i = 0,num = 0,len = aCheckBox.length; i < len; i++){
+                if(aCheckBox[i].checked){
+                    num++;
+                }
+                if(num < aCheckBox.length){
+                    oAll.checked = ""
+                }else if(num == aCheckBox.length){
+                    oAll.checked = "checked";
+                }
+            }
+        }
+        for(var i = 0,len = aCheckBox.length;i < len;i++){
+            aCheckBox[i].onclick = function(){
+                isAll();
+            };
+        }
+    };
+</script>
+</head>
+
+<body>
+<dl>
+    <dt>
+        <input type="checkbox" id="checkAll" /><label for="checkAll">全选</label>
+        <a href="javascript:;" id="reverseCheck">反选</a>
+    </dt>
+    <dd>
+        <div><input type="checkbox" /><label>选项1</label></div>
+        <div><input type="checkbox" /><label>选项2</label></div>
+        <div><input type="checkbox" /><label>选项3</label></div>
+        <div><input type="checkbox" /><label>选项4</label></div>
+        <div><input type="checkbox" /><label>选项5</label></div>
+        <div><input type="checkbox" /><label>选项6</label></div>
+        <div><input type="checkbox" /><label>选项7</label></div>
+        <div><input type="checkbox" /><label>选项8</label></div>
+        <div><input type="checkbox" /><label>选项9</label></div>
+        <div><input type="checkbox" /><label>选项10</label></div>
+    </dd>
+</dl>
+</body>
+</html>

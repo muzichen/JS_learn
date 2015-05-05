@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    div,ul,li,h2{padding: 0; margin: 0;}
+    ul,li{list-style-type: none;}
+    #main{width: 300px;margin:0 auto; overflow: hidden;}
+    #main h2{height:30px; line-height: 30px; color: #999; border: 1px solid #666; font-size: 14px;padding-left: 5px; background:#ccc url(images/ico.gif) 285px 15px no-repeat; cursor: pointer;}
+    #main h2.drop{background-position: 285px -10px;}
+    #main .list{background-color:#e9edf2;}
+    #main .list li{ height: 30px; line-height: 30px;}
+    #main .list li a{display: block; text-decoration: none; color: #6b7980; font-size:12px; padding: 0 5px;}
+    #main .list li a:hover{background-color: #fff; text-decoration: underline;}
+</style>
+<script>
+    window.onload = function(){
+        var oMain = document.getElementById("main");
+        var oH2 = oMain.getElementsByTagName("h2")[0];
+        var oList = oMain.getElementsByTagName("ul")[0];
+        oH2.onclick = function(){
+            oList.style.display = oList.style.display == "none" ? "block" : "none";
+            oH2.className = oH2.className == "" ? "drop" : "";
+                    };
+    };
+</script>
+</head>
+
+<body>
+    <div id="main">
+        <h2>播放列表...</h2>
+        <ul class="list">
+            <li><a href="#">东风破-周杰伦</a></li>
+            <li><a href="#">自导自演-周杰伦</a></li>
+            <li><a href="#">晴天-周杰伦</a></li>
+            <li><a href="#">龙拳-周杰伦</a></li>
+        </ul>
+    </div>
+</body>
+</html>

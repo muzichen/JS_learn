@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    div,input,ul,li{padding: 0; margin: 0;}
+    ul,li{list-style-type: none;}
+    a{text-decoration: none;}
+    #box{width: 300px; height: 410px; margin: 0 auto; background-color: #000; position: relative; overflow: hidden;}
+    #box .num{width: 290px; height: 83px; text-align: right; background: url(img/inputBg.jpg) repeat-x; padding: 0 3px; font-size: 50px; font-weight: bold; margin-top: 20px;}
+    #box ul{position: relative; background: url(img/bg.jpg); overflow: hidden; padding: 0  0 17px 8px;}
+    #box ul li{float: left; width: 63px; height: 41px; margin: 16px 10px 0 0;}
+    #box ul li a{display: block; width: 63px; height: 41px; background: url(img/btn.png) no-repeat; line-height: 41px; color: #fff; text-align: center;}
+    #box ul li a:hover{background-position: -64px 0;}
+    #box ul li.btn1 a{background-position: 0 -42px;}
+    #box ul li.btn1 a:hover{background-position: -65px -42px; }
+    #box ul li.btn2 a{background-position: 0 -166px; height: 99px; line-height: 99px;}
+    #box ul li.btn2 a:hover{background-position: -63px -166px;}
+    #box ul li.btn3{width: 136px;}
+    #box ul li.btn3 a{background-position: 0 -83px; width: 136px;}
+    #box ul li.btn3 a:hover{background-position: 0 -124px;}
+</style>
+<script>
+    window.onload = function(){
+        var oBox = document.getElementById("box");
+        var oText = oBox.getElementsByTagName("input")[0];
+        var oUl = oBox.getElementsByTagName("ul")[0];
+        var aA = oUl.getElementsByTagName("a");
+        var s = false;
+        for(var i = 0,len = aA.length; i < len; i++){
+            aA[i].onclick = function(){
+                switch(this.innerHTML){
+                    case "C":
+                        oText.value = 0;
+                        break;
+                    case "%":
+                        oText.value = count("%");
+                        break;
+                    case "÷":
+                        oText.value = coumt("/");
+                        break;
+                    case "X":
+                        oText.value = count("*");
+                        break;
+                    case ".":
+                        if(oText.value.search(/[\.\%\/\*\-\+]/) != -1)//找到.跳出
+                        break;
+                    default:
+                        s && (oText.value = 0, s = false);
+                        oText.value.length < 10 && (oText.value = (oText.value + this.innerHTML).replace(/^[0\%\/\*\-\+](\d)/,"$1"));
+                }
+            };
+        }
+        function count(){
+            
+        }
+    };
+</script>
+</head>
+
+<body>
+<div id="box">
+    <input type="text" class="num" readonly="readonly" maxlength="9" value="0">
+    <ul>
+        <li class="btn1"><a href="javascript:;">C</a></li>
+        <li class="btn1"><a href="javascript:;">%</a></li>
+        <li class="btn1"><a href="javascript:;">÷</a></li>
+        <li class="btn1"><a href="javascript:;">X</a></li>
+        <li><a href="javascript:;">7</a></li>
+        <li><a href="javascript:;">8</a></li>
+        <li><a href="javascript:;">9</a></li>
+        <li class="btn1"><a href="javascript:;">-</a></li>
+        <li><a href="javascript:;">4</a></li>
+        <li><a href="javascript:;">5</a></li>
+        <li><a href="javascript:;">6</a></li>
+        <li class="btn1"><a href="javascript:;">+</a></li>
+        <li><a href="javascript:;">1</a></li>
+        <li><a href="javascript:;">2</a></li>
+        <li><a href="javascript:;">3</a></li>
+        <li class="btn2"><a href="javascript:;">=</a></li>
+        <li class="btn3"><a href="javascript:;">0</a></li>
+        <li><a href="javascript:;">.</a></li>
+    </ul>
+</div>
+</body>
+</html>

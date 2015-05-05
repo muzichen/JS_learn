@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	#main{width:950px; margin:0 auto; background-color:#fff;}
+	#main div{background-color:pink; padding:20px; margin-bottom:25px; cursor:pointer; border:2px solid #ccc; text-indent:2em;}
+</style>
+<script>
+	window.onload = function(){
+		var oMain = document.getElementById("main");
+		var aDiv = oMain.getElementsByTagName("div");
+		for(var i = 0,len = aDiv.length; i < len; i++){
+			aDiv[i].onclick = function(){
+				alert(this.innerHTML);
+			};
+		}
+	};
+</script>
+</head>
+
+<body>
+<div id="main">
+	<div><strong>新华网</strong>北京5月29日电(新华社记者)从三聚氰胺到瘦肉精，从染色馒头到毒豆芽，在食品中添加非食用物质和滥用食品添加剂已成为百姓餐桌上突出的"不安全因素"。近期以来，从北京到广东，从浙江到宁夏，一场打击食品非法添加的"风暴"席卷全国。</div>
+    <div>做好风险监测工作是许多地方加强食品安全的重点工作之一。在北京，<strong style="color:red;">全市设立了3000个风险监测点</strong>，建立了包括3000余种食品添加剂和非法添加物的数据库，对110家国内外食品相关组织、媒体发布的线索进行监测，及时进行风险评估，加强抽检控制。</div>
+</div>
+</body>
+</html>

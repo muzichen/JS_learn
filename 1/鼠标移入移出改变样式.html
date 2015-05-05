@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	#div1{width:200px; height:200px; background-color:#000; color:#fff; text-align:center; line-height:200px; border:10px solid #000; padding:10px; cursor:crosshair;}
+	#div1.change{background-color:#fff; border:10px solid red; color:blue;}
+</style>
+<script>
+	window.onload = function(){
+		var oDiv = document.getElementById("div1");
+		oDiv.onmouseover = function(){
+			this.className = "change";
+		};
+		oDiv.onmouseout = function(){
+			this.className = "";
+		};
+	};
+</script>
+</head>
+
+<body>
+<div id="div1">鼠标移入移出改变样式</div>
+</body>
+</html>

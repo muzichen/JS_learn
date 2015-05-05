@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    body{text-align: center;}
+</style>
+<script>
+    window.onload = function(){
+        var aInput = document.getElementsByTagName("input");
+        var largeNum = document.getElementById("large");
+        aInput[2].onclick = function(){
+            var a = aInput[0].value;
+            var b = aInput[1].value;
+            largeNum.innerHTML = parseInt(a) > parseInt(b) ? parseInt(a) : parseInt(b);
+        };
+
+    };
+</script>
+</head>
+
+<body>
+<input type="text" class="num"><strong style="color:red;">VS</strong><input type="text" class="num"><input type="button" value="最大的数是>>"><strong id="large" style="font-size:16px; color:red;">*</strong>
+</body>
+</html>

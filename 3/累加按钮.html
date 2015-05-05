@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    body{text-align: center;}
+</style>
+<script>
+    window.onload = function(){
+        var btn = document.getElementById("btn");
+        btn.onclick = function(){
+            var num = parseInt(this.value);
+            num++;
+            this.value = num;
+        };
+    };
+</script>
+</head>
+
+<body>
+    <input type="button" value="1" id="btn">
+</body>
+</html>

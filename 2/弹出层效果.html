@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	input,div,h2,span{margin:0; padding:0;}
+	#mask{width:100%; height:100%; background-color:#ccc; opacity:0.3; filter:alpha(opacity=30); position:absolute; left:0; top:0; display:none;}
+	#box{width:300px; height:200px; background:#FC3; border:2px solid #F63; position:absolute; left:50%; top:50%; margin:-100px 0 0 -150px; display:none;}
+	#box h2{width:100%; height:30px; border-bottom:2px solid #F63; position:relative;} 
+	#box span{position:absolute; top:5px; right:5px; font-size:14px; color:#F63; background-color:#fff; border:1px solid #F30; padding:0 4px; cursor:pointer;}
+</style>
+<script>
+	window.onload = function(){
+		var oBtn = document.getElementsByTagName("input")[0];
+		var oMask = document.getElementById("mask");
+		var oBox = document.getElementById("box");
+		var oClose = oBox.getElementsByTagName("span")[0];
+		oBtn.onclick = function(){
+			oMask.style.display = "block";
+			oBox.style.display = "block";
+		};
+		oClose.onclick = function(){
+			oMask.style.display = "none";
+			oBox.style.display = "none";
+		};
+	};
+</script>
+</head>
+
+<body>
+<center><input type="button" value="弹出层" /></center>
+<div id="mask"></div>
+<div id="box"><h2><span>X</span></h2>哦耶耶哦啦啦</div>
+</body>
+</html>

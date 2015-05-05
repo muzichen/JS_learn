@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	#main{width:400px; margin:0 auto;}
+	#box{background-color:blue; width:200px; height:200px;}
+</style>
+<script>
+	window.onload = function(){
+		function changeStyle(obj,attr,value){
+			obj.style[attr] = value;
+		}
+		var oOk = document.getElementsByTagName("input")[2];
+		var oReset = document.getElementsByTagName("input")[3];
+		var oDiv = document.getElementById("box");
+		oOk.onclick = function(){
+			var oAttr = document.getElementsByTagName("input")[0].value;
+			var oValue = document.getElementsByTagName("input")[1].value;
+			changeStyle(oDiv,oAttr,oValue);
+		};
+		oReset.onclick = function(){
+			oDiv.removeAttribute("style");
+		};
+	};
+</script>
+</head>
+
+<body>
+<div id="main">
+	属性名:<input type="text" value="background" /><br /><br />
+    属性值:<input type="text" value="red" /><br /><br />
+    <input type="button" value="确定" />
+    <input type="button" value="重置" /><br />
+    <div id="box"></div>
+ </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	#main{width:400px; height:400px; margin:0 auto; background-color:pink; text-align:center; position:relative;}
+	ul,li{list-style:none; margin:0; padding:0;}
+	#list{width:50px; height:60px; background-color:#3FC; border:1px solid #09F; font-size:14px; line-height:20px; position:absolute; left:175px; display:none;}
+	#list li{cursor:pointer;}
+	#list li:hover{background-color:#3CF;}
+	#list .close{border-top:1px solid #09F;}
+</style>
+<script>
+	window.onload = function(){
+		var oBtn = document.getElementsByTagName("input")[0];
+		var oList = document.getElementById("list");
+		var oClose = document.getElementsByTagName("li")[2];
+		oBtn.onclick = function(){
+			oList.style.display = oList.style.display == "block" ? "none" : "block";
+		};
+		oClose.onclick = function(){
+			oList.style.display = "none";
+		};
+	};
+</script>
+</head>
+
+<body>
+	<div id="main">
+    	<input type="button" value="输入法" />
+        <ul id="list">
+        	<li>手写</li>
+            <li>拼音</li>
+            <li class="close">关闭</li>
+       	</ul>
+    </div>
+</body>
+</html>

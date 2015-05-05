@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    body,div,ul,li,h2,p{padding:0; margin: 0;}
+    ul,li{list-style-type: none;}
+    #main{width: 300px; height: 300px;margin:0 auto; padding: 5px; border:1px solid #000;}
+    #main ul{width: 100%;overflow: hidden;}
+    #main ul li{ float: left; width: 40px; height: 40px; background-color: red; padding: 5px; margin:9px; line-height: 30px; border:3px solid #ccc; background-color: #666; color: #fff; cursor: pointer;}
+    #main ul li:hover{background-color: #fff; color: red;}
+    #content{padding: 5px; height: 50px;border:1px solid #fff; background-color: #ccc; color: #fff;}
+    #content h2{font-size: 18px;}
+    #content p{font-size: 12px;}
+</style>
+<script>
+    window.onload = function(){
+        var arrMonth = [
+            "元旦：1月1日至3日放假三天。",
+            "春节：2月2日至8日放假7天。",
+            "妇女节：3月8日妇女节，与我无关。",
+            "清明节：4月3日至5日放假3天",
+            "劳动节：4月30日至5月2日放假3天。",
+            "端午节：6月4日至6日放假3天。",
+            "小暑：7月7日小暑。不放假。",
+            "七夕节：8月6日七夕节。不放假。",
+            "中秋节：9月10日至12日放假3天。",
+            "国庆节：10月1日至7日放假7天。",
+            "立冬：11月8日立冬。不放假。",
+            "艾滋病日:12月1日<br />废除奴隶制国际日:12月2日。"
+        ];
+        var oMain = document.getElementById("main");
+        var aLi = oMain.getElementsByTagName("li");
+        var oContent = document.getElementById("content");
+        var oStrong = oContent.getElementsByTagName("strong")[0];
+        var oP = oContent.getElementsByTagName("p")[0];
+        for(var i = 0,len = aLi.length; i < len; i++){
+            aLi[i].index = i + 1;
+        }
+        for(var i = 0,len = aLi.length; i < len; i++){
+                aLi[i].onmouseover = function(){
+                    oStrong.innerHTML = this.index;
+                    oP.innerHTML = arrMonth[this.index - 1];
+                };
+        }
+    };
+</script>
+</head>
+
+<body>
+<div id="main">
+    <ul>
+        <li><strong>1</strong>JAN</li>
+        <li><strong>2</strong>FER</li>
+        <li><strong>3</strong>MAR</li>
+        <li><strong>4</strong>APR</li>
+        <li><strong>5</strong>MAY</li>
+        <li><strong>6</strong>JUN</li>
+        <li><strong>7</strong>JUL</li>
+        <li><strong>8</strong>AUG</li>
+        <li><strong>9</strong>SEP</li>
+        <li><strong>10</strong>OCT</li>
+        <li><strong>11</strong>NOV</li>
+        <li><strong>12</strong>DEC</li>
+    </ul>
+    <div id="content">
+        <h2><strong>1</strong>月节日</h2>
+        <p>元旦：1月1日至3日放假三天。</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	body,ul,li,img{padding:0; margin:0;}
+	ul,li{list-style:none;}
+	img{border:0; width:150px; height:150px; display:block;}
+	#main{width:690px; margin:0 auto; background:pink; border:1px solid #000; padding:5px; overflow:hidden;}
+	ul{width:100%; zoom:1;}
+	ul li{float:left; margin-left:18px; margin-bottom:5px;}
+	ul li img{cursor:crosshair; opacity:0.5; filter:alpha(opacity=50);}
+	ul li img.current{opacity:1; filter:alpha(opacity=100);}
+</style>
+<script>
+	window.onload = function(){
+		var oDiv = document.getElementById("main");
+		var aImg = oDiv.getElementsByTagName("img");
+		for(var i = 0, len = aImg.length; i < len; i++){
+			aImg[i].onmouseover = function(){
+				this.className = "current";
+			};
+			aImg[i].onmouseout = function(){
+				this.className = "";
+			};
+		}
+	};
+</script>
+</head>
+
+<body>
+<div id="main">
+	<ul>
+    	<li><img src="images/1.jpg" /></li>
+        <li><img src="images/2.jpg" /></li>
+        <li><img src="images/3.jpg" /></li>
+        <li><img src="images/4.jpg" /></li>
+        <li><img src="images/5.jpg" /></li>
+        <li><img src="images/6.jpg" /></li>
+        <li><img src="images/7.jpg" /></li>
+        <li><img src="images/8.jpg" /></li>
+    </ul>
+</div>
+</body>
+</html>

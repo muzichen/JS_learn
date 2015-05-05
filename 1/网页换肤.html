@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>网页换肤</title>
+    <style>
+        body,ul,li{padding:0; margin: 0;}
+        body{background: pink;}
+        ul,li{list-style: none;}
+        a{text-decoration: none;}
+        a:hover{text-decoration: underline;}
+        #main{width: 600px; margin: 0 auto; overflow: hidden; background: pink; padding-top:10px;}
+        #changeColor{width: 300px;}
+        #changeColor li{display: inline-block; margin-left: 5px; width: 15px; height: 15px; text-indent: -9999px; cursor: pointer;}
+        #changeColor #red{background: red;}
+        #changeColor #green{background: green;}
+        #changeColor #grey{background: grey;}
+        #nav{width: 100%; height: 30px; background: red; margin-top: 10px; line-height: 30px; border:1px solid #FFFFFF;}
+        #nav li{display: inline-block; padding: 0 15px; border-right: 1px solid #fff;}
+        #nav li a{display: block; font-size: 14px; color: #fff;}
+        .current{width: 10px!important; height: 10px!important;}
+    </style>
+    <script>
+        window.onload = function(){
+            var oChange = document.getElementById("changeColor");
+            var aLi = oChange.getElementsByTagName("li");
+            var oBody = document.body;
+            var oNav = document.getElementById("nav");
+            for(var i = 0; i < aLi.length; i++){
+                aLi[i].index = i;
+                aLi[i].onclick = function(){
+                    for(var i = 0; i < aLi.length; i++){
+                        aLi[i].className = "";
+                    }
+                    this.className = "current";
+                    switch(this.index){
+                        case 0:
+                            oBody.style.background = "red"
+                            oNav.style.background = "red"
+                            break
+                        case 1:
+                            oBody.style.background = "green"
+                            oNav.style.background = "green"
+                            break
+                        case 2:
+                            oBody.style.background = "grey"
+                            oNav.style.background = "grey"
+                            break
+                        default:
+                            break
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div id="main">
+        <ul id="changeColor">
+            <li id="red">红</li>
+            <li id="green">绿</li>
+            <li id="grey">黄</li>
+        </ul>
+        <ul id="nav">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">留言</a></li>
+            <li><a href="#">论坛</a></li>
+            <li class="last"><a href="#">相册</a></li>
+        </ul>
+    </div>
+</body>
+</html>

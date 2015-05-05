@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    body{text-align: center;}
+</style>
+<script>
+    window.onload = function(){
+        var aInput = document.getElementsByTagName("input");
+        var oNum = document.getElementById("addNum");
+        aInput[2].onclick = function(){
+            var a = aInput[0].value;
+            var b = aInput[1].value;
+            if(a == "" || b == ""){
+                alert("不能为空！")
+                return;
+            }
+            oNum.innerHTML = parseInt(a) + parseInt(b);
+        };
+
+    };
+</script>
+</head>
+
+<body>
+<input type="text" class="num"><strong>+</strong><input type="text" class="num"><strong>=</strong><strong style="color:red;" id="addNum">?</strong><input type="button" class="add" value="求和">
+</body>
+</html>

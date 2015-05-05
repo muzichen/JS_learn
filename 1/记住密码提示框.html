@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+	#main{width:1000px; margin:0 auto; background-color:#FFF; font-size:14px;}
+	#tip{font-size:12px; color:#000; background-color:#FF3; border:1px solid #F00; width:150px; display:none; padding:10px;}
+</style>
+<script>
+	window.onload = function(){
+		var oLabel = document.getElementsByTagName("label");
+		var oTip = document.getElementById('tip');
+		oLabel[0].onmouseover = function(){
+			oTip.style.display = "block";
+		};
+		oLabel[0].onmouseout = function(){
+			oTip.style.display = "none";
+		};
+	};
+</script>
+</head>
+
+<body>
+	<div id="main">
+    	<label><input type="checkbox" />记住密码</label>
+        <div id="tip">为了您的信息安全，请不要在公共场所使用此功能！</div>
+    </div>
+</body>
+</html>

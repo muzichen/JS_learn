@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>自动播放-幻灯片效果</title>
+    <style type="text/css">
+        div,ul,li,img{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        img{border: 0;}
+        body{background-color: #000;}
+        #slide{width: 510px; height: 190px; border: 1px solid #ccc; border-radius: 3px; margin: 10px auto; background-color: #fff; position: relative;}
+        #slide .content{border: 1px solid #999;width: 490px; height: 170px; margin: 9px 0 0 9px; position: relative;}
+        #slide .content li{position: absolute; top: 0; left: 0; }
+        #slide .count{position: absolute; right: 10px; bottom: 15px;}
+        #slide .count li{float: left; width: 20px; height: 20px; border-radius: 20px; background-color: orange; cursor: pointer; margin-right: 5px; color: #fff; text-align: center; font-size: 14px; line-height: 20px;}
+        #slide .count li.current{background-color: #ff6600; font-weight: bold;}
+    </style>
+    <script type="text/javascript">
+    window.onload = function(){
+        var oSlide = document.getElementById("slide");
+        var aImg = oSlide.getElementsByTagName("ul")[0].getElementsByTagName("img");
+        var aCount = oSlide.getElementsByTagName("ul")[1].getElementsByTagName("li");
+        var timer = play = null;
+        var a = 0;
+        for(var i=0; i < aCount.length; i++){
+            aCount[i].index = i;
+            //鼠标移入停止自动播放
+            aCount[i].onmouseover = function(){
+                clearInterval(play);
+                show(this.index);
+            };
+            //鼠标离开恢复自动播放
+            aCount[i].onmouseout = function(){
+                autoPlay();
+            };
+        }
+        //图片自动播放函数
+        function autoPlay(){
+            play = setInterval(function(){
+                a++;
+                if(a >= aCount.length){
+                    a = 0;
+                }
+                show(a);
+        },1000);
+        }
+        autoPlay();
+        //图片淡入淡出函数
+        function show(_index){
+                var alpha = 0;
+                var index = _index;
+                for(var i=0;i<aCount.length;i++){
+                    aCount[i].className = "";
+                }
+                aCount[index].className = "current";
+                
+                clearInterval(timer);
+
+                for(var i=0;i<aImg.length;i++){
+                    aImg[i].style.opacity = 0;
+                    aImg[i].style.filter = "alpha(opacity=0)";
+                }
+
+                timer = setInterval(function(){
+                    alpha += 2;
+                    if(alpha > 100){
+                        alpha = 100;
+                    }
+                    aImg[index].style.opacity = alpha / 100;
+                    aImg[index].style.filter = "alpha:(opacity=" + alpha + ")";
+                    if(alpha == 100){
+                        clearInterval(timer);
+                    }
+                },20);
+
+            };
+    };
+    </script>
+</head>
+<body>
+    <div id="slide">
+        <div class="content">
+            <ul>
+                <li><img src="img/1.jpg"></li>
+                <li><img src="img/2.jpg"></li>
+                <li><img src="img/3.jpg"></li>
+                <li><img src="img/4.jpg"></li>
+                <li><img src="img/5.jpg"></li>
+            </ul>
+        </div>
+        <ul class="count">
+                <li class="current">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+    </div>
+</body>
+</html>

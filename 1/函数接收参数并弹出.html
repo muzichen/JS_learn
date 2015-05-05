@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>函数接收参数并弹出</title>
+    <script>
+        window.onload = function(){
+            var aInput = document.getElementsByTagName("input");
+            function valueAlert(a,b){
+                alert(a);
+                alert(b);
+            }
+            aInput[2].onclick = function(){
+                valueAlert(aInput[0].value,aInput[1].value);
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="text" value="北京市">
+    <input type="text" value="海淀区">
+    <input type="button" value="传参">
+</body>
+</html>
