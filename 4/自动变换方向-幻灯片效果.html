@@ -22,6 +22,7 @@
         var aCount = oSlide.getElementsByTagName("ul")[1].getElementsByTagName("li");
         var timer = play = null;
         var a = 0;
+        var offOn = true;
         for(var i=0; i < aCount.length; i++){
             aCount[i].index = i;
             //鼠标移入停止自动播放
@@ -37,9 +38,21 @@
         //图片自动播放函数
         function autoPlay(){
             play = setInterval(function(){
-                a++;
+                //判断播放的顺序
+                if(offOn){
+                    a++;
+                }else{
+                    a--;
+                }
+                //正序播放
                 if(a >= aCount.length){
+                    a = aCount.length - 2;
+                    offOn = false;
+                }
+                //逆序播放
+                if(a <= 0){
                     a = 0;
+                    offOn = true;
                 }
                 show(a);
         },1000);
