@@ -13,13 +13,24 @@
                 var aInput = document.getElementsByTagName("input");
                 var aDiv = document.getElementsByTagName("div");
                 var arr = [];
+                var offOn = true;
                 aInput[0].onclick = function(){
                     arr = mkArr(aDiv[0].innerHTML);
-                    arr.shift();
-                    aDiv[0].innerHTML = arr;
+                    //alert(arr);
+                    if(offOn){
+                        arr.shift();
+                        this.value = "恢复January(1)";
+                        offOn = false;
+                    }else{
+                        arr.unshift("January(1)");
+                        this.value = "删除January(1)";
+                        offOn = true;
+                    }
+                    aDiv[0].innerHTML = arr.join();
                 };
 
                 function mkArr(str){
+                    arr.length = 0;
                     str = str.split(",");
                     for(var i in str){
                         arr.push(str[i]);
