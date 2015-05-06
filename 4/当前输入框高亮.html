@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>当前输入框高亮</title>
+    <style type="text/css">
+        div,form,h2,p,label,input{margin: 0; padding: 0;}
+        #box{width: 401px; height: 171px; border: 2px solid #ff6619; margin: 10px auto; background-color: #fef4eb;}
+        #box h2{height: 35px; border-bottom: 2px solid #ff6619; line-height: 35px; background-color: #ffebd7; font-size: 16px; font-weight: 800; color: #ff6619;}
+        #box p{height: 31px; line-height: 31px; margin-top: 10px; float: left; clear: left;}
+        #box p label{width: 100px; text-align: right; height: 31px; line-height: 31px; float: left;}
+        #box p .text{border:0; height: 31px; line-height: 31px;}
+        #box p .f_text{border:1px solid #ccc; background-color: #eee;height: 31px; line-height: 31px;}
+        #box p .btn{width: 105px; height: 30px; background-color: #f60; color: #fff; border: 0; line-height: 30px; border-radius: 5px; cursor: pointer; margin-left: 60px; font-size: 16px;}
+    </style>
+    <script type="text/javascript">
+            window.onload = function(){
+                var aInp = document.getElementsByTagName("input");
+                for(var i=0; i < aInp.length - 1; i++){
+                    aInp[i].onfocus = function(){
+                        this.className = "f_text";
+                    };
+                    aInp[i].onblur = function(){
+                        this.className = "text";
+                    };
+                }
+            };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <form>
+            <h2>用户登录</h2>
+            <p><label>用户名:</label><input class="text" type="text" /></p>
+            <p><label>密码:</label><input class="text" type="password" /></p>
+            <p><input class="btn" type="button" value="登录"></p>
+        </form>
+    </div>
+</body>
+</html>
