@@ -3,10 +3,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>arguments应用--求出函数参数的总和</title>
+    <style type="text/css">
+        pre{width: 100%; height: 200px; background-color: #ccc; margin: 10px auto; color: green; border: 1px dashed #999; line-height: 20px;}
+    </style>
 </head>
 <body>
     <pre>
-        
+        &lt;script type="text/javascript"&gt;
+            var i = result = 0;
+            function sum(){
+                for(i; i < arguments.length; i++){
+                    result += arguments[i];
+                }
+                alert(result);
+            }
+            sum(1,2,3,4,5,6,7,8,9,10);
+        &lt;script&gt;
     </pre>
     <script type="text/javascript">
             var i = result = 0;
