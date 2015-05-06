@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>设置-读取对象属性</title>
+    <style type="text/css">
+        #box{width: 400px; height: 200px; border: 1px solid #ff6600; margin: 10px auto; background-color: #fef4eb;}
+        #box a{display:inline-block;height: 20px; padding: 5px; line-height: 20px; background-color: red; color: #fff; font-weight: bold; text-decoration: none; font-size: 12px; margin:10px 0 0 10px;}
+        .box{width: 200px; height: 200px; border:1px solid blue; background-color: #ccc; }
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            function getStyle(obj,value){
+                if(obj.currentStyle){
+                    return obj.currentStyle[value];
+                }else{
+                    return document.defaultView.getComputedStyle(obj,null)[value];
+                }
+            }
+            function setStyle(obj,attr,value){
+                obj.style[attr] = value;
+            }
+            var oBox = document.getElementById("box");
+            var aA = oBox.getElementsByTagName("a");
+            aA[0].onclick = function(){
+                alert("width:" + getStyle(oBox,"width") + "\nheight:" + getStyle(oBox,"height") + "\nbackground:" + getStyle(oBox,"background-color"));
+            };
+            aA[1].onclick = function(){
+                setStyle(oBox,"width","300px");
+                setStyle(oBox,"height","300px");
+                setStyle(oBox,"background","blue");
+            }
+            aA[2].onclick = function(){
+                setStyle(oBox,"width","400px");
+                setStyle(oBox,"height","200px");
+                setStyle(oBox,"background","#fef4eb");
+            };
+        };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <a href="#">GET STYLE</a>
+        <a href="#">SET STYLE</a>
+        <a href="#">DEFAULT STYLE</a>
+    </div>
+</body>
+</html>
