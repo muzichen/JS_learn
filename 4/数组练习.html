@@ -5,7 +5,7 @@
     <title>数组练习</title>
     <style type="text/css">
         div{margin: 0; padding: 0;}
-        div{border:1px dashed green; background-color: #eee; width: 100%; height: 40px; font-size: 14px; color: #999; padding: 10px 0 0 10px;}
+        div{border:1px dashed green; background-color: #eee; width: 100%;font-size: 14px; color: #999; padding: 10px 0 10px 10px; word-wrap: break-word;}
         input{margin:5px 5px 5px 0;}
     </style>
     <script type="text/javascript">
@@ -43,7 +43,32 @@
                     aDiv[0].innerHTML = arr.join();
                 };
                 aInput[2].onclick = function(){
-                    arr = mkArr
+                    arr = mkArr(aDiv[1].innerHTML);
+                    aDiv[1].innerHTML = arr.concat(arr).toString();
+                };
+                aInput[3].onclick = function(){
+                    //Div[1].innerHTML = "0,1,2,3,4,5,6,7,8,9";
+                    arr = mkArr(aDiv[1].innerHTML);
+                    arr.length = 10;
+                    aDiv[1].innerHTML = arr.join();
+                };
+                aInput[5].onclick = function(){
+                    arr = mkArr(aDiv[2].innerHTML);
+                    /*for(var i = 0; i < 3; i++){
+                        arr.shift();
+                    }*/
+                    arr.splice(0,3);
+                    aDiv[2].innerHTML = arr.join();
+                };
+                aInput[6].onclick = function(){
+                    arr = mkArr(aDiv[2].innerHTML);
+                    arr.splice(1,2);
+                    aDiv[2].innerHTML = arr.join();
+                };
+                aInput[7].onclick = function(){
+                    arr = mkArr(aDiv[2].innerHTML);
+                    arr.splice(2,0,"orange","purple");
+                    aDiv[2].innerHTML = arr.join();
                 };
                 function mkArr(str){
                     arr = [];
