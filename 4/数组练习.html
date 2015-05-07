@@ -28,9 +28,25 @@
                     }
                     aDiv[0].innerHTML = arr.join();
                 };
-
+                aInput[1].onclick = function(){
+                    arr = mkArr(aDiv[0].innerHTML);
+                    //alert(arr);
+                    if(offOn){
+                        arr.pop();
+                        this.value = "恢复December(12)";
+                        offOn = false;
+                    }else{
+                        arr.push("December(12)");
+                        this.value = "删除December(12)";
+                        offOn = true;
+                    }
+                    aDiv[0].innerHTML = arr.join();
+                };
+                aInput[2].onclick = function(){
+                    arr = mkArr
+                };
                 function mkArr(str){
-                    arr.length = 0;
+                    arr = [];
                     str = str.split(",");
                     for(var i in str){
                         arr.push(str[i]);
