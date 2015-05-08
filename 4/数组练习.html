@@ -70,6 +70,11 @@
                     arr.splice(2,0,"orange","purple");
                     aDiv[2].innerHTML = arr.join();
                 };
+                aInput[8].onclick = function(){
+                    arr = mkArr(aDiv[2].innerHTML);
+                    arr.splice(1,2,"#009900","#0000ff");
+                    aDiv[2].innerHTML = arr.join();
+                };
                 function mkArr(str){
                     arr = [];
                     str = str.split(",");
