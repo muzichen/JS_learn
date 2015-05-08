@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>事件练习</title>
+    <script type="text/javascript">
+            var EventUtil = {
+                addHandler : function(element,eventName,handler){
+                    if(element.addEventListener){
+                        element.addEventListener(eventName,handler,false);
+                    }else if(element.attachEvent){
+                        element.attachEvent("on" + eventName,handler);
+                    }else{
+                        element["on" + eventName] = null; 
+                    }
+                },
+                removeHandler : function(element,eventName,handler){
+                    if(element.removeEventListener){
+                        element.removeEventListener(eventName,handler,false);
+                    }else if(element.detachEvent){
+                        element.detachEvent("on" + eventName,handler);
+                    }else{
+                        element["on" + eventName] = null; 
+                    }
+                }
+            };
+            function fnOut(){
+                alert("我可以点击！");
+            }
+            window.onload = function(){
+                var aInp = document.getElementsByTagName("input");
+                //为第一个按钮添加事件
+                EventUtil.addHandler(aInp[1],"click",function(){
+                    EventUtil.addHandler(aInp[0],"click",fnOut);
+                    aInp[0].value = "我可以点击了！";
+                });
+                //为按钮解除事件
+                EventUtil.addHandler(aInp[2],"click",function(){
+                    EventUtil.removeHandler(aInp[0],"click",fnOut);
+                    aInp[0].value = "毫无用处的按钮";
+                });
+            };
+    </script>
+</head>
+<body>
+    <center><input type="button" value="毫无用处的按钮"> <input type="button" value="绑定click"> <input type="button" value="解除绑定"></center>
+</body>
+</html>
