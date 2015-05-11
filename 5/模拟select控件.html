@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>模拟select控件</title>
+    <style type="text/css">
+        body,div,span,a,ul,li{padding: 0; margin: 0;}
+        ul,li{list-style: none;}
+        a{text-decoration: none;}
+        body{background-color: #23384e;}
+        #search{width: 350px; height: 34px;margin: 0 auto; position: relative; background: url(img/search.jpg) no-repeat 0 0;}
+        #search .search_content{background: url(img/search.jpg) no-repeat right 0; height: 34px;}
+        #search .search_content form{height:34px;background:url(img/search.jpg) repeat-x 0 -34px; margin: 0 20px 0 40px;}
+        #search .search_content .select{width: 190px; height: 22px; line-height: 22px;color: #fff; cursor: pointer; background: url(img/search.jpg) no-repeat 0 -68px; display: inline-block; padding-right: 8px; margin-top: 4px; font-size: 12px;}
+        #search .search_content a{background: url(img/search.jpg) no-repeat 0 -90px; width: 80px; height: 24px; display: inline-block; line-height: 22px; color: #000; font-size: 14px; text-align: center;}
+        #search .search_content a:hover{color:#f60;background-position:-80px -90px;}
+        #search ul{position: absolute; width: 198px; left: 40px; border:1px solid #fff; top:27px;}
+        #search ul li{color: #fff; border-bottom: 1px dashed #fff; height: 25px; line-height: 25px; font-size: 14px; padding-left: 5px; cursor: pointer; display: none;}
+        #search ul li:hover{background: #8b8b8b;}
+    </style>
+</head>
+<body>
+<div id="search">
+    <div class="search_content">
+        <form>
+            <span class="select">请选择游戏名称</span>
+            <a href="javascript:;">搜索</a>
+        </form>
+    </div>
+    <ul>
+        <li>地下城与勇士</li>
+        <li>魔兽世界（国服）</li>
+        <li>魔兽世界（台服）</li>
+        <li>热血江湖</li>
+        <li>神鬼传奇</li>
+        <li>大话西游II</li>
+        <li>QQ幻想世界</li>
+    </ul>
+</div>
+    
+</body>
+</html>
