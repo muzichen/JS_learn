@@ -3,8 +3,84 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>星级评分系统</title>
+    <style type="text/css">
+        div,span,ul,li,a,img{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        .clear:after{content: ""; display: block; visibility: hidden; clear: both;}
+        #star{width: 650px; margin:0 auto;position: relative;}
+        #star span{float: left; font-size: 12px; height: 20px; line-height: 20px; margin-left: 10px;}
+        #star ul{float: left; margin-left: 10px;}
+        #star ul li{display: inline-block; width: 24px; height: 24px; background:url(img/star.png) no-repeat 0 0; text-indent: -9999px; cursor: pointer;}
+        #star ul li.on{background-position: 0 -28px;}
+        #star span strong{color: red;}
+        #star p{width: 159px; height: 60px; position: absolute; top:15px; left: 50px; border:1px solid #999; border-radius: 3px; background-color: #ccc; font-size: 12px; color: #999; display: none;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            var oStar = document.getElementById("star");
+            var aLi = oStar.getElementsByTagName("li");
+            var oP = oStar.getElementsByTagName("p")[0];
+            var oUl = oStar.getElementsByTagName("ul")[0];
+            var oSpan = oStar.getElementsByTagName("span")[1];
+            var aMsg = [
+                "很不满意|差的太离谱，与卖家描述的严重不符，非常不满",
+                "不满意|部分有破损，与卖家描述的不符，不满意",
+                "一般|质量一般，没有卖家描述的那么好",
+                "满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+                "非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+            ];
+            for(var i = 0;i < aLi.length; i++){
+                aLi[i].index = i;
+                aLi[i].onmouseover = function(){
+                    //showPoint(this.index + 1);
+                    /*for(var i=0;i<aLi.length;i++){
+                        aLi[i].className = "";
+                    }
+                    
+                    for(var i = 0 ;i < this.index + 1; i++){
+                        aLi[i].className = "on";
+                    }*/
+                    showPoint(this.index + 1);
+                    //this.className = "on";
+                    oP.style.display = "block";
+                    oP.style.left = oUl.offsetLeft + this.index * this.offsetWidth - 70 + "px";
+                    oP.innerHTML = aMsg[this.index];
+                };
+                aLi[i].onmouseout = function(){
+                    //showPoint(this.index + 1);
+                    //this.className = "";
+                    //当鼠标移开时恢复到click事件触发时的等级
+                    showPoint();
+                    oP.style.display = "none";
+                };
+                aLi[i].onclick = function(){
+                    iStar = this.index + 1;
+                    oP.style.display = "none";
+                    oSpan.innerHTML = "<strong>" + (this.index + 1) + "分</strong>" + aMsg[this.index];
+                };
+            }
+
+            function showPoint(_index){
+                var iScore = _index || iStar;
+                for(var i = 0;i <= aLi.length;i++){
+                        aLi[i].className = i < iScore ? "on" : "";
+                }
+            }
+        };
+    </script>
 </head>
 <body>
-    
+    <div id="star" class="clear">
+        <span>点击星星就能打分</span>
+        <ul>
+            <li><a href="javascript:;"></a>1</li>
+            <li><a href="javascript:;"></a>2</li>
+            <li><a href="javascript:;"></a>3</li>
+            <li><a href="javascript:;"></a>4</li>
+            <li><a href="javascript:;"></a>5</li>
+        </ul>
+        <span></span>
+        <p></p>
+    </div>
 </body>
 </html>
