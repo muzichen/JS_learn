@@ -14,10 +14,37 @@
         #search .search_content .select{width: 190px; height: 22px; line-height: 22px;color: #fff; cursor: pointer; background: url(img/search.jpg) no-repeat 0 -68px; display: inline-block; padding-right: 8px; margin-top: 4px; font-size: 12px;}
         #search .search_content a{background: url(img/search.jpg) no-repeat 0 -90px; width: 80px; height: 24px; display: inline-block; line-height: 22px; color: #000; font-size: 14px; text-align: center;}
         #search .search_content a:hover{color:#f60;background-position:-80px -90px;}
-        #search ul{position: absolute; width: 198px; left: 40px; border:1px solid #fff; top:27px;}
-        #search ul li{color: #fff; border-bottom: 1px dashed #fff; height: 25px; line-height: 25px; font-size: 14px; padding-left: 5px; cursor: pointer; display: none;}
+        #search ul{position: absolute; width: 198px; left: 40px; border:1px solid #fff; top:27px; display: none;}
+        #search ul li{color: #fff; border-bottom: 1px dashed #fff; height: 25px; line-height: 25px; font-size: 14px; padding-left: 5px; cursor: pointer;}
         #search ul li:hover{background: #8b8b8b;}
     </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            var oSearch = document.getElementById("search");
+            var oSpan = oSearch.getElementsByTagName("span")[0];
+            var oUl = oSearch.getElementsByTagName("ul")[0];
+            var aLi = oUl.getElementsByTagName("li");
+            //var offOn = true;
+            oSpan.onclick = function(e){
+                //oUl.style.display = offOn ? "block" :"";
+                //offOn = !offOn;
+                oUl.style.display = oUl.style.display == "block" ? "none" : "block";
+                //阻止冒泡
+                e = event || window.event;
+                e.cancelBubble = true;
+            };
+            for(var i = 0; i < aLi.length; i++){
+                aLi[i].onclick = function(){
+                    oSpan.innerHTML = this.innerHTML;
+                    oUl.style.display = "none";
+                };
+            }
+            document.onclick = function(){
+                //因为此处设置了click事件，如果不阻止事件冒泡的话会导致oUl始终不显示
+                oUl.style.display = "none";
+            };
+        };
+    </script>
 </head>
 <body>
 <div id="search">
