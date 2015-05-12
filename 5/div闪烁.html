@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>div闪烁</title>
+    <style type="text/css">
+        body{margin:0; padding:0;}
+        #box{width: 200px; height: 200px; background-color: red; margin: 10px auto; font-size: 14px; color: #fff; line-height: 200px; text-align: center; cursor: pointer;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            var oBox = document.getElementById("box");
+            var timer = null;
+            oBox.onclick = function(){
+                var i = 0;
+                //刚开始取消定时器，防止多次点击导致效果出错
+                clearInterval(timer);
+                timer = setInterval(function(){
+                    i++;
+                    if(i % 2 == 0){
+                        oBox.style.display = "none";
+                    }else{
+                        oBox.style.display ="block";
+                    }
+                    if(i > 6){
+                        clearInterval(timer);
+                    }
+                },50);
+            };
+        };
+    </script>
+</head>
+<body>
+    <div id="box">点击div闪烁</div>
+</body>
+</html>
