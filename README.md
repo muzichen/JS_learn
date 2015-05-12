@@ -3,4 +3,4 @@ My training when learned JS.
 Contact Me:sdlichen#gmail.com  
 Sina Weibo:http://weibo.com/377800902  
 My Blog:http://www.chenzimu.com   
-²Î¿¼×Ô£ºhttp://js.fgm.cc/learn
+Refer To£ºhttp://js.fgm.cc/learn
