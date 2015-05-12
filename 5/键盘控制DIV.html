@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>键盘控制DIV</title>
+    <style type="text/css">
+        body{margin:0; padding: 0; overflow:hidden;}
+        /*body不加overflow:hidden在div移动到右下角时会有问题*/
+        #box{width:150px; height:150px; background-color:red; position:absolute;}
+    </style>
+    <script type="text/javascript">
+            window.onload = function(){
+                var oBox = document.getElementById("box");
+                //用于判断按键是否按下
+                var bTop = bBottom = bLeft = bRight = bCtrl = false;
+                setInterval(function(){
+                    if(bTop){
+                        oBox.style.top= oBox.offsetTop - 10 + "px";
+                    }else if(bBottom){
+                        oBox.style.top = oBox.offsetTop + 10 + "px";
+                    }else if(bRight){
+                        oBox.style.left = oBox.offsetLeft + 10 + "px";
+                    }else if(bLeft){
+                        oBox.style.left = oBox.offsetLeft - 10 + "px";
+                    }
+                    limit();
+                },20);
+                document.onkeydown = function(e){
+                    var e = event || window.event;
+                    bCtrl = e.ctrlKey;
+
+                    switch(e.keyCode){
+                        case 37:
+                            bLeft = true;
+                            break;
+                        case 38:
+                            if(bCtrl){
+                                var oldWidth = oBox.offsetWidth;
+                                var oldHeight = oBox.offsetHeight;
+
+                                oBox.style.width = oBox.offsetWidth * 1.5 + "px";
+                                oBox.style.height = oBox.offsetHeight * 1.5 + "px";
+
+                                oBox.style.left = oBox.offsetLeft - (oBox.offsetWidth - oldWidth) / 2 + "px";
+                                oBox.style.top = oBox.offsetTop - (oBox.offsetHeight - oldHeight) / 2 + "px";
+                                //如果没有break，代码会向下执行，导致bTop为true使div移动
+                                break;
+                            }
+                            bTop = true;
+                            break;
+                        case 39:
+                            bRight = true;
+                            break;
+                        case 40:
+                            if(bCtrl){
+                                var oldWidth = oBox.offsetWidth;
+                                var oldHeight = oBox.offsetHeight;
+
+                                oBox.style.width = oBox.offsetWidth * 0.75 + "px";
+                                oBox.style.height = oBox.offsetHeight * 0.75 + "px";
+
+                                oBox.style.left = oBox.offsetLeft + (oldWidth - oBox.offsetWidth) / 2 + "px";
+                                oBox.style.top = oBox.offsetTop + (oldHeight - oBox.offsetHeight) / 2 + "px";
+                                break;
+                            }
+                            bBottom = true;
+                            break;
+                        case 49:
+                            /*if(bCtrl){
+                                oBox.style.background = "green"
+                            }*/
+                            bCtrl && (oBox.style.background = "green");
+                            break;
+                        case 50:
+                            bCtrl && (oBox.style.background = "yellow");
+                            break;
+                        case 51:
+                            bCtrl && (oBox.style.background = "blue");
+                            break;
+                    }
+                    //取消浏览器的默认行为
+                    return false;
+                };
+                document.onkeyup = function(e){
+                    var e = event || window.event;
+                    switch(e.keyCode){
+                        case 37:
+                            bLeft = false;
+                            break;
+                        case 38:
+                            bTop = false;
+                            break;
+                        case 39:
+                            bRight = false;
+                            break;
+                        case 40:
+                            bBottom = false;
+                            break;
+                    }
+                };
+
+                //防止溢出
+                function limit(){
+                    var viewWidth = document.documentElement.clientWidth;
+                    var viewHeight = document.documentElement.clientHeight;
+                    //防止左侧溢出
+                    /*if(oBox.offsetLeft <= 0){
+                        oBox.style.left = 0;
+                    }*/
+                    oBox.offsetLeft <= 0 && (oBox.style.left = 0);
+                    //防止顶部溢出
+                    oBox.offsetTop <= 0 && (oBox.style.top = 0);
+                    //防止右侧溢出
+                    viewWidth - oBox.offsetLeft - oBox.offsetWidth <= 0 && (oBox.style.left = viewWidth - oBox.offsetWidth + "px");
+                    //防止底部溢出
+                    viewHeight - oBox.offsetTop - oBox.offsetHeight <= 0 &&(oBox.style.top = viewHeight - oBox.offsetHeight + "px");
+                }
+            };
+    </script>
+</head>
+<body>
+    <pre>
+        上：↑下：↓左：←右：→
+        Ctrl + 1 : 背景变为绿色
+        Ctrl + 2 : 背景变为黄色
+        Ctrl + 3 : 背景变为蓝色
+        Ctrl + ↑ : 放大
+        Ctrl + ↓ : 缩小
+    </pre>
+    <div id="box"></div>
+</body>
+</html>

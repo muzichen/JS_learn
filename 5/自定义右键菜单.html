@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>自定义右键菜单</title>
+    <style type="text/css">
+        body,ul,li{padding:0; margin:0;}
+        ul,li{list-style:none;}
+        a{text-decoration:none;}
+        #menu{width:65px;text-align:center; border:1px solid #ccc; border-radius:3px; position:absolute;}
+        #menu li{height:24px; width:100%;line-height:24px;}
+        #menu li a{display:block; font-size:12px; color:#000;}
+        #menu li.on{background-color:#ccc;}
+        #menu li.on a{color:#fff;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            var oMenu = document.getElementById("menu");
+            var aLi = oMenu.getElementsByTagName("li");
+            //加载隐藏菜单
+            oMenu.style.display = "none";
+            //自定义菜单
+            document.oncontextmenu = function(e){
+                var e = event || window.event;
+                var menuStyle = oMenu.style;
+                menuStyle.display = "block";
+                menuStyle.left = e.clientX + "px";
+                menuStyle.top = e.clientY + "px";
+                //取消右键菜单的默认行为
+                return false;
+            };
+            //点击页面右键菜单消失
+            document.onclick = function(){
+                oMenu.style.display = "none";
+            };
+            //设置点击li的样式
+            for(var i = 0; i < aLi.length; i++){
+                aLi[i].onmouseover = function(){
+                    this.className = "on";
+                };
+                aLi[i].onmouseout = function(){
+                    this.className = "";
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <center><strong>右键单击，显示自定义的菜单</strong></center>
+    <ul id="menu">
+        <li><a href="javascript:;">复制</a></li>
+        <li><a href="javascript:;">剪切</a></li>
+        <li><a href="javascript:;">粘贴</a></li>
+    </ul>
+</body>
+</html>

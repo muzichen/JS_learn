@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>图片跟随鼠标移动</title>
+    <style type="text/css">
+        body,div,img{padding:0; margin: 0;}
+        img{border:0;}
+        #box{width:100px; margin:10px auto;}
+        #box img{border:1px solid #ccc; padding:5px;}
+        #box img.on{border-color:red; cursor:pointer;}
+        #big{width:400px; height:400px; position:absolute; border:2px solid #ccc; top:0; display:none;}
+    </style>
+    <script type="text/javascript">
+            window.onload = function(){
+                var oBox = document.getElementById("box");
+                var oImg = oBox.getElementsByTagName("img")[0];
+                var oBig = document.getElementById("big");
+                oImg.onmouseover = function(){
+                    this.className = "on";
+                };
+                oImg.onmouseout = function(){
+                    this.className = "";
+                    oBig.style.display = "none";
+                };
+                oImg.onmousemove = function(e){
+                    var e = event || window.event;
+                    var oLeft = e.clientX;
+                    var oTop = e.clientY;
+                    oBig.style.display = "block";
+                    oBig.style.left = oLeft + 20 + "px";
+                    oBig.style.top = oTop + 20 + "px";
+                };
+            };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <img src="img/shirt_1.jpg" alt="shirt_1" />
+    </div>
+    <div id="big"><img src="img/shirt_1_big.jpg" alt="shirt_1" /></div>
+</body>
+</html>
