@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>单击页面显示单击处的坐标</title>
+    <style type="text/css">
+        pre{color:#000; padding;10px 20px; border:1px dashed #999; background-color:#f0f0f0;}
+    </style>
+</head>
+<script type="text/javascript">
+    document.onclick = function(e){
+        //alert(1);
+        var e = event || window.event;
+        alert("坐标是： [" + e.clientX + "," + e.clientY + "]");
+    };
+</script>
+<body>
+<pre>
+    &lt;script ype="text/javascript"&gt;
+    document.onclick = function(e){
+        //alert(1);
+        var e = event || window.event;
+        alert("坐标是： [" + e.clientX + "," + e.clientY + "]");
+    };
+    &lt;/script&gt;
+</pre>
+</body>
+</html>
