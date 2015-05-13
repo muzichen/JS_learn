@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>完美拖拽</title>
+    <style type="text/css">
+        body,div,p,strong{margin: 0; padding:0;}
+        html,body{background-color: #000;}
+        a{text-decoration: none;}
+        #box{width: 281px; height: 150px; border: 2px solid #ccc; background-color: #333;position: absolute;}
+        #box #head{height: 25px; line-height: 25px; border-bottom: 2px solid #ccc; background-color: #222; cursor: move; padding: 0 6px;}
+        #box #head a{float: right; color: #fff; font-size: 12px;}
+        #box p{color: #fff; font-size: 14px; font-weight: 600;}
+        #box p strong{color: yellow;}
+    </style>
+    <script type="text/javascript">
+            window.onload = function(){
+                var oBox = document.getElementById("box");
+                var oDrag = document.getElementById("head");
+                var oA = oDrag.getElementsByTagName("a")[0];
+                var aStrong = oBox.getElementsByTagName("strong");
+                var pos = [];//用于存储div移动的轨迹
+                var isDrag = false;
+                var posX = posY = 0;
+                var timer = null;//定时器
+
+                //鼠标按下激活拖拽事件
+                oDrag.onmousedown = function(e){
+                    //alert(1);
+                    var e = event || window.event;
+                    isDrag= true;
+                    //获得鼠标点击区域距离div边框的距离
+                    posX = e.clientX - oBox.offsetLeft;
+                    posY = e.clientY - oBox.offsetTop;
+
+                    //获得此时div的位置存入数组
+                    pos.push({x:oBox.offsetLeft,y:oBox.offsetTop});
+
+                    if(this.setCapture){
+                        this.setCapture();
+                    }
+
+
+                };
+                //用document解决鼠标移动比div移动快的问题
+                document.onmousemove = function(e){
+                    if(!isDrag) return;
+                    var e = event || window.event;
+                    //获得当前div的left和top值
+                    var divLeft = e.clientX - posX;
+                    var divTop = e.clientY - posY;
+
+                    //限制拖动区域
+                    var divMaxLeft = document.documentElement.clientWidth - oBox.clientWidth;
+                    var divMaxTop = document.documentElement.clientHeight - oBox.clientHeight;
+
+                    divLeft = divLeft < 0 ? 0 : divLeft;
+                    divLeft = divLeft > divMaxLeft ? divMaxLeft : divLeft;
+
+                    divTop = divTop < 0 ? 0 : divTop;
+                    divTop = divTop > divMaxTop ? divMaxTop : divTop;
+
+                    oBox.style.left = divLeft + "px";
+                    oBox.style.top = divTop + "px";
+
+                    //div移动的位置轨迹存入数组
+                    pos.push({x:divLeft,y:divTop});
+
+                    listener();
+
+                };
+
+                //释放鼠标，结束拖拽
+                document.onmouseup = function(){
+                    isDrag = false;
+                    if(oDrag.releaseCapture){
+                        releaseCapture();
+                    }
+                    listener();
+                };
+
+                //阻止oA冒泡到oDrag导致鼠标按到oA拖动也触发拖动事件
+                oA.onmousedown = function(e){
+                    var e = event || window.event;
+                    e.cancelBubble = true;
+                };
+
+                //回放拖动的痕迹
+                oA.onclick = function(){
+                    /*for(var i in pos){
+                        console.log(pos[i]);
+                    }*/
+                    timer = setInterval(function(){
+                        var oPos = pos.pop();
+                        if(oPos){
+                            oBox.style.left = oPos.x + "px";
+                            oBox.style.top = oPos.y + "px";
+                        }else{
+                            clearInterval(timer);
+                        }
+                        listener();
+                    },50);
+
+                };
+
+                //监听div的状态
+                function listener(){
+                    isDrag ? aStrong[0].innerHTML = "true" : aStrong[0].innerHTML = "false";
+                    aStrong[1].innerHTML = oBox.offsetLeft;
+                    aStrong[2].innerHTML = oBox.offsetTop;
+                }
+
+            };
+    </script>
+</head>
+<body>
+    <div id="box">
+        <div id="head"><a href="javascript:;">点击回放拖拽痕迹</a></div>
+        <p>Drag:<strong>false</strong></p>
+        <p>offsetTop:<strong>0</strong></p>
+        <p>offsetLeft:<strong>0</strong></p>
+    </div>
+</body>
+</html>
