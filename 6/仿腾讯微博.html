@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>仿腾讯微博</title>
+    <style>
+        body,div,h2,input,ul,li,textarea,span{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        a{text-decoration: none;}
+        img{border:0;}
+        input{border: 0;}
+        body{background-color: #3c3a3b;}
+        .clear:after{content: ""; display: block; visibility: hidden; clear: both;}
+        #weibo{width: 500px; background-color: #fff; border-radius: 5px; margin: 10px auto;}
+        #top h2{font-size: 18px; line-height: 47px; margin-left: 20px; color: #333333; font-weight: normal;}
+        #top .headThum{width: 500px;}
+        #top .headThum .userName{float: left; margin-left: 20px; height: 26px; border: 1px solid #d0d0d0; border-radius: 3px; width: 160px; resize: none;}
+        #top .headThum .img{float: right; font-size: 0;}
+        #top .headThum .img li{display: inline-block; width: 30px; height: 30px; font-size: 14px; margin-right: 6px; border-radius: 3px; opacity: 0.6; filter:alpha(opacity=60); cursor: pointer; border: 1px solid #ccc;}
+        #top .headThum .img li.on{border-color:red;opacity: 1; filter:alpha(opacity=100);}
+        #top .headThum .img li img{width: 30px; height: 30px; border-radius: 3px;}
+        #top .weiboInput{padding: 8px 20px; width: 460px;}
+        #top .weiboInput .weibo{width: 458px; height: 71px; border:1px solid #d0d0d0; border-radius: 3px; resize: none; float: left; overflow: auto;}
+        #top .weiboInput .guangbo{float: right; padding-top: 10px; line-height: 30px; height: 30px;}
+        #top .weiboInput .guangbo span{font-size: 12px; color:#a1999b;}
+        #top .weiboInput .guangbo .gb{width: 112px; height: 30px; background:url(img/btn.png) no-repeat; cursor: pointer;}
+        #top .weiboInput .guangbo input.on{background-position: 0 -30px;}
+        #bottom{padding: 10px;}
+        #bottom h2{width: 480px; height: 35px; background-color: #e3eaec; position: relative; font-size: 14px; color: #000;}
+        #bottom h2 span{width: 86px; height: 28px; line-height: 28px; background-color: #fff; position: absolute; bottom: 0; left: 7px; text-align: center;}
+        #bottom ul li{height: 53px;border-bottom: 1px dashed #d8d8d8; position: relative; padding: 10px;}
+        #bottom ul li.on{background-color: #f5f5f5;}
+        #bottom ul li .userImg,#bottom ul li .weiboMain{float: left;}
+        #bottom ul li .weiboMain{margin-left: 10px; width: 400px;}
+        #bottom ul li .weiboMain .userName{display: inline;}
+        #bottom ul li .weiboMain .userName a{font-size: 14px; color: #2b4f95;}
+        #bottom ul li .weiboMain .userWeibo{display: inline; font-size: 14px;}
+        #bottom ul li .weiboMain .time{font-size: 9px; color:#8f9db6; margin-top: 10px;}
+        #bottom ul li .weiboMain .time a{float: right; color: #889db6; display: none;}
+    </style>
+    <script>
+        window.onload = function(){
+            var oTop = document.getElementById("top");
+            var oBottom = document.getElementById("bottom");
+            var aTopLi = oTop.getElementsByTagName("li");
+
+            //getByClass
+            function getByClass(oParent,oClass){
+                var aClass = [];
+                var aElements = oParent.getElementsByTagName("*");
+                for(var i = 0;i < aElements.length; i++){
+                    if(aElements[i].className == oClass){
+                        aClass.push(aElements[i]);
+                    }
+                }
+                return aClass;
+            }
+
+            for(var i = 0;i < aTopLi.length; i++){
+                aTopLi[i].className = "";
+                aTopLi[i].onmouseover = function(){
+                    this.className = "on";
+                };
+                aTopLi[i].onmouseout = function(){
+                    this.className = "";
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <div id="weibo">
+        <div id="top">
+            <h2>来，说说你在做什么，想什么</h2>
+            <div class="headThum clear">
+                <input type="text" class="userName">
+                <ul class="img">
+                    <li class="on"><img src="img/face1.gif" alt=""></li>
+                    <li><img src="img/face2.gif" alt=""></li>
+                    <li><img src="img/face3.gif" alt=""></li>
+                    <li><img src="img/face4.gif" alt=""></li>
+                    <li><img src="img/face5.gif" alt=""></li>
+                    <li><img src="img/face6.gif" alt=""></li>
+                    <li><img src="img/face7.gif" alt=""></li>
+                    <li><img src="img/face8.gif" alt=""></li>
+                </ul>
+            </div>
+            <div class="weiboInput clear">
+                <textarea  class="weibo"></textarea>
+                <div class="guangbo">
+                    <span>还能输入<strong>140</strong>字</span>
+                    <input type="button" class="gb" value="" />
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <h2>
+                <span>大家在说</span>
+            </h2>
+            <ul class="weiboList">
+                <li>
+                    <div class="userImg"><img src="img/face.gif" /></div>
+                    <div class="weiboMain">
+                        <div class="userName"><a href="#">臣子木</a></div>
+                        <div class="userWeibo">测试一下啦</div>
+                        <div class="time"><span>5月14日 9:18</span><a class="delete" href="javascript:;">删除</a></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="userImg"><img src="img/face.gif" /></div>
+                    <div class="weiboMain">
+                        <div class="userName"><a href="#">臣子木</a></div>
+                        <div class="userWeibo">测试一下啦</div>
+                        <div class="time"><span>5月14日 9:18</span><a class="delete" href="javascript:;">删除</a></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="userImg"><img src="img/face.gif" /></div>
+                    <div class="weiboMain">
+                        <div class="userName"><a href="#">臣子木</a></div>
+                        <div class="userWeibo">测试一下啦</div>
+                        <div class="time"><span>5月14日 9:18</span><a class="delete" href="javascript:;">删除</a></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="userImg"><img src="img/face.gif" /></div>
+                    <div class="weiboMain">
+                        <div class="userName"><a href="#">臣子木</a></div>
+                        <div class="userWeibo">测试一下啦</div>
+                        <div class="time"><span>5月14日 9:18</span><a class="delete" href="javascript:;">删除</a></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
