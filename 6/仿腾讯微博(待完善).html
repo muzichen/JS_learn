@@ -17,7 +17,7 @@
         #top .headThum .userName{float: left; margin-left: 20px; height: 26px; border: 1px solid #d0d0d0; border-radius: 3px; width: 160px; resize: none;}
         #top .headThum .img{float: right; font-size: 0;}
         #top .headThum .img li{display: inline-block; width: 30px; height: 30px; font-size: 14px; margin-right: 6px; border-radius: 3px; opacity: 0.6; filter:alpha(opacity=60); cursor: pointer; border: 1px solid #ccc;}
-        #top .headThum .img li.on{border-color:red;opacity: 1; filter:alpha(opacity=100);}
+        #top .headThum .img li.on,#top .headThum .img li.current{border-color:red;opacity: 1; filter:alpha(opacity=100);}
         #top .headThum .img li img{width: 30px; height: 30px; border-radius: 3px;}
         #top .weiboInput{padding: 8px 20px; width: 460px;}
         #top .weiboInput .weibo{width: 458px; height: 71px; border:1px solid #d0d0d0; border-radius: 3px; resize: none; float: left; overflow: auto;}
@@ -28,7 +28,7 @@
         #bottom{padding: 10px;}
         #bottom h2{width: 480px; height: 35px; background-color: #e3eaec; position: relative; font-size: 14px; color: #000;}
         #bottom h2 span{width: 86px; height: 28px; line-height: 28px; background-color: #fff; position: absolute; bottom: 0; left: 7px; text-align: center;}
-        #bottom ul li{height: 53px;border-bottom: 1px dashed #d8d8d8; position: relative; padding: 10px;}
+        #bottom ul li{border-bottom: 1px dashed #d8d8d8; position: relative; padding: 10px;overflow: hidden;}
         #bottom ul li.on{background-color: #f5f5f5;}
         #bottom ul li .userImg,#bottom ul li .weiboMain{float: left;}
         #bottom ul li .weiboMain{margin-left: 10px; width: 400px;}
@@ -39,13 +39,8 @@
         #bottom ul li .weiboMain .time a{float: right; color: #889db6; display: none;}
     </style>
     <script>
-        window.onload = function(){
-            var oTop = document.getElementById("top");
-            var oBottom = document.getElementById("bottom");
-            var aTopLi = oTop.getElementsByTagName("li");
-
-            //getByClass
-            function getByClass(oParent,oClass){
+         //getByClass函数
+        function getByClass(oParent,oClass){
                 var aClass = [];
                 var aElements = oParent.getElementsByTagName("*");
                 for(var i = 0;i < aElements.length; i++){
@@ -54,17 +49,112 @@
                     }
                 }
                 return aClass;
-            }
+        }
+        window.onload = function(){
+            var oTop = document.getElementById("top");
+            var oTopUl = oTop.getElementsByTagName("ul")[0];
+            var oBottom = document.getElementById("bottom");
+            var aTopLi = oTop.getElementsByTagName("li");
+            var oDiv1 = oTop.getElementsByTagName("div")[0];
+            var oDiv2 = oTop.getElementsByTagName("div")[1];
+            var oUserName = getByClass(oDiv1,"userName")[0];
+            var oText = getByClass(oDiv2,"weibo")[0];
+            var oSubmit = getByClass(oDiv2,"guangbo")[0].getElementsByTagName("input")[0];
+            var oBottomUl = getByClass(oBottom,"weiboList")[0];
+            var aBottomLi = oBottomUl.getElementsByTagName("li");
 
+            //头像移入移出点击效果
             for(var i = 0;i < aTopLi.length; i++){
-                aTopLi[i].className = "";
                 aTopLi[i].onmouseover = function(){
-                    this.className = "on";
+                    this.className += "on";
                 };
                 aTopLi[i].onmouseout = function(){
-                    this.className = "";
+                    //鼠标移出时只替换class为on时为空
+                    this.className = this.className.replace("on","");
+                };
+                aTopLi[i].onclick = function(){
+                    for(var i = 0;i < aTopLi.length; i++){
+                        aTopLi[i].className = "";
+                    }
+                    this.className = "current";
                 };
             }
+
+            //微博列表移入移出效果
+            function weiboHover(){
+
+                for(var i = 0;i < aBottomLi.length; i++){
+                    aBottomLi[i].onmouseover = function(){
+                        var oParent = getByClass(this,"weiboMain")[0];
+                        var oParent1 = getByClass(oParent, "time")[0];
+                        var oA = getByClass(oParent1,"delete")[0];
+                        this.className = "on";
+                        oA.style.display = "block";
+
+                    };
+                    aBottomLi[i].onmouseout = function(){
+                        var oParent = getByClass(this,"weiboMain")[0];
+                        var oParent1 = getByClass(oParent, "time")[0];
+                        var oA = getByClass(oParent1,"delete")[0];
+                        this.className = "";
+                        oA.style.display = "none";
+                    };
+                }
+
+            }
+            weiboHover();
+            //广播按钮移入移出效果
+            oSubmit.onmouseover = function(){
+                this.className += " on";
+            };
+
+            oSubmit.onmouseout = function(){
+                this.className = "gb";
+            };
+            //微博提交
+            oSubmit.onclick = function(){
+                //alert(1);
+                if(oUserName.value == ""){
+                    alert("请输入您的姓名!");
+                    return;
+                }else if(oText.value == ""){
+                    alert("先输入一些内容吧！");
+                    return;
+                }
+                var userName = oUserName.value;
+                var userText = oText.value;
+                var oLi = document.createElement("li");
+                var imgSrc = getByClass(oTopUl,"current")[0].getElementsByTagName("img")[0].src;
+                //alert(imgSrc);
+                oLi.innerHTML = 
+                    "<div class=\"userImg\"><img src=\""+imgSrc+"\"></div>\
+                             <div class=\"weiboMain\">\
+                                <div class=\"userName\"><a href=\"javascript:;\">" + userName + "</a>:</div>\
+                                <div class=\"userWeibo\">" + userText + "</div>\
+                                <div class=\"time\"><span>5月14日 9:18</span><a class=\"delete\" href=\"javascript:;\">删除</a></div>\
+                    </div>";
+                if(aBottomLi.length == 0){
+                    oBottomUl.appendChild(oLi);
+                }else{
+                    oBottomUl.insertBefore(oLi,aBottomLi[0]);
+                }
+                //添加鼠标滑入效果
+                weiboHover();
+                //添加删除函数
+                delWeibo();
+            };
+
+            //微博删除
+            function delWeibo(){
+                var aA = getByClass(oBottomUl,"delete");
+                for(var i = 0;i < aA.length; i++){
+                    aA[i].onclick = function(){
+                        var oParent = this.parentNode.parentNode.parentNode;
+                        oBottomUl.removeChild(oParent);
+                    };
+                }
+            }
+            delWeibo();
         };
     </script>
 </head>
