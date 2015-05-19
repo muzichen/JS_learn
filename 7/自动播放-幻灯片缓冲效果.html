@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>自动播放-幻灯片缓冲效果</title>
+    <style type="text/css">
+        body,div,ul,li,a{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        body{background-color: #000000; text-align: center;}
+        #slide{width: 404px; height: 174px; border-radius: 3px; margin: 10px auto; background-color: #FFFFFF; border:8px solid #FFFFFF; overflow: hidden; position: relative;}
+        #slide .slide_content ul{position: absolute;}
+        #slide .slide_content ul li{overflow: hidden; width: 404px; height: 174px;}
+        #slide .slide_content ul li img{width: 404px; height: 174px;}
+        #slide .circle{position: absolute; bottom: 0; right: 0;}
+        #slide .circle ul li{float: left; width: 22px; height: 22px; line-height: 22px; color: #FFFFFF; background-color: blue; border-radius: 22px; margin-left: 5px; opacity: 0.4; filter:alpha(opacity=40); cursor: pointer;}
+        #slide .circle ul li.on{opacity: 1; filter:alpha(opacity=100);}
+    </style>
+    <script type="text/javascript">
+
+            function getByClass(oParent,oClass){
+                var aTag = oParent.getElementsByTagName("*");
+                var result = [];
+                for(var i = 0;i < aTag.length; i++){
+                    if(aTag[i].className == oClass){
+                        result.push(aTag[i]);
+                    }
+                }
+                return result;
+            }
+
+            window.onload = function(){
+                var oSlide = document.getElementById("slide");
+                var oUl = oSlide.getElementsByTagName("ul")[0];
+                var oSlide_content = getByClass(oSlide,"slide_content")[0];
+                var contentLi = oSlide_content.getElementsByTagName("li");
+                var oCircle = getByClass(oSlide,"circle")[0];
+                var circleLi = oCircle.getElementsByTagName("li");
+                var oHeight = contentLi[0].offsetHeight;
+                var timer = autoPlayTimer = null;
+                var _index = 0;
+                var offOn = true;
+                for(var i = 0; i < circleLi.length; i++){
+                    circleLi[i].index = i;
+                    circleLi[i].onmouseover = function(){
+                        var _this = this;
+                        for(var i = 0; i < circleLi.length; i++){
+                            circleLi[i].className = "";
+                        }
+                        this.className = "on";
+                        doMove(oUl,-(this.index * oHeight));
+                    };
+                    circleLi[i].onmouseout = function(){
+                        this.className = "";
+                    };
+                }
+                //页面第一次载入自动播放
+                autoPlay();
+
+
+                //鼠标移入幻灯区停止自动播放
+                oSlide.onmouseover = function(){
+                    clearInterval(autoPlayTimer);
+                };
+                //鼠标移出幻灯区恢复自动播放
+                oSlide.onmouseout = function(){
+                    autoPlay();
+                };
+
+                //自动播放函数
+                function autoPlay(){
+                    autoPlayTimer = setInterval(function(){
+                        offOn ? _index++ : _index--;
+                        if(_index < 0){
+                            _index = 0;
+                            offOn = true;
+                        }else if(_index >= circleLi.length - 1){
+                            _index = circleLi.length - 1;
+                            offOn = false;
+                        }
+                        doMove(oUl,-(_index * oHeight));
+                    },1000);  
+                }
+
+
+                //滑动函数
+                function doMove(iElement,iTarget){
+                        clearInterval(timer);
+                        timer = setInterval(function(){
+                            var iSpeed = (iTarget - oUl.offsetTop)/10;
+                            iSpeed < 0 ? iSpeed = Math.floor(iSpeed) : iSpeed = Math.ceil(iSpeed);
+                            if(iElement.offsetTop == iTarget){
+                                clearInterval(timer);
+                            }else{
+                                iElement.style.top =  iElement.offsetTop + iSpeed + "px";
+                            }
+                   },20);
+                }
+            };
+    </script>
+</head>
+<body>
+    <div id="slide">
+        <div class="slide_content">
+            <ul>
+                <li><img src="img/1.jpg" alt=""></li>
+                <li><img src="img/2.jpg" alt=""></li>
+                <li><img src="img/3.jpg" alt=""></li>
+                <li><img src="img/4.jpg" alt=""></li>
+                <li><img src="img/5.jpg" alt=""></li>
+            </ul>
+        </div>
+        <div class="circle">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
