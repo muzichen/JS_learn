@@ -77,6 +77,10 @@
                             _index = circleLi.length - 1;
                             offOn = false;
                         }
+                        for(var i = 0; i < circleLi.length; i++){
+                            circleLi[i].className = "";
+                        }
+                        circleLi[_index].className = "on";
                         doMove(oUl,-(_index * oHeight));
                     },1000);  
                 }
