@@ -8,20 +8,98 @@
         ul,li{list-style: none;}
         body{background: #000;}
         #box{width: 800px; height: auto; margin: 10px auto; text-align: center; position: relative; height: 400px;}
-        #box .title{width: 100%; height: 50px; line-height: 50px; color: #FFFFFF; position: absolute; top:0; left: 0; background: red; opacity: 0.6; filter:alpha(opacity=60);}
-        #box .mask_left,#box .mask_right{width: 400px; height: 100%; position: absolute; top:0;}
-        #box .mask_right{right: 0;}
-        #box .left,#box .right{background: url(img/btn.png) no-repeat; width: 40px; height: 80px; position: absolute; top:50%; cursor: pointer;}
-        #box .right{right: 0; background-position: -40px 0;}
+        #box.loading{background: url(img/loading.gif) no-repeat 50% 50%;}
+        #title{width: 100%; height: 50px; line-height: 50px; color: #FFFFFF; position: absolute; top:0; left: 0; background: red; opacity: 0.6; filter:alpha(opacity=60);}
+        #mask_left,#mask_right{width: 400px; height: 100%; position: absolute; top:0;}
+        #mask_right{right: 0;}
+        #left,#right{background: url(img/btn.png) no-repeat; width: 40px; height: 80px; position: absolute; top:50%; cursor: pointer; opacity: 0; filter:alpha(opacity=0); z-index: 999;}
+        #right{right: 0; background-position: -40px 0;opacity: 0; filter:alpha(opacity=0);}
     </style>
+    <script type="text/javascript">
+            function getStyle(oElement,attr){
+                if(oElement.currentStyle){
+                    return oElement.currentStyle[attr];
+                }else{
+                    return getComputedStyle(oElement,null)[attr];
+                }
+            }
+
+            function decMove(oElement,attr,iTarget,fn){
+                //开始取消定时器，防止多次点击或移入元素时使移动速度加快
+                clearInterval(oElement.timer);
+                /*
+                    oElement.timer:
+                    将定时器加到元素自己身上，相当于每个元素有自己单独的一个定时器，当鼠标从一个元素移到另一个元素激活另一个元素的运动状态时，不会改变之前的元素的运动状态，如果只使用一个定时器，会导致之前的元素的运动状态停止。
+                */
+                oElement.timer = setInterval(function(){
+                    //获得元素当前属性的值
+                    var iCurrent = parseFloat(getStyle(oElement,attr));
+                    if(attr == "opacity"){
+                        iCurrent = parseInt(iCurrent * 100);
+                    }
+                    var iSpeed = (iTarget - iCurrent) / 10;
+                    iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                    if(iCurrent == iTarget){
+                        clearInterval(oElement.timer);
+                        //回调函数，如果存在fn就执行fn
+                        fn && fn();
+                    }else{
+                        if(attr == "opacity"){
+                        oElement.style.opacity = (iCurrent + iSpeed) / 100;
+                        oElement.style.filter = ":alpha(opacity=" + (iCurrent+iSpeed) + ")";
+                        }else{
+                            oElement.style[attr] = iCurrent + iSpeed + "px"; 
+                        }
+                    }
+                },50);
+            }
+            window.onload = function(){
+                var oBox = document.getElementById("box");
+                var oLeft = document.getElementById("left");
+                var oRight = document.getElementById("right");
+                var omaskLeft = document.getElementById("mask_left");
+                var omaskRight = document.getElementById("mask_right");
+                var oTitle = document.getElementById("title");
+                var oSpan = oTitle.getElementsByTagName("span")[0];
+                var aImg = [
+                    {"imgSrc" : "img/1-1.jpg", "title" : "7月26日，吊车将事故现场的车头残片吊至大型运输车辆上。"},
+                    {"imgSrc" : "img/1-2.jpg", "title" : "7月26日，一辆大卡车准备驶离事故现场。"},
+                    {"imgSrc" : "img/1-3.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"},
+                    {"imgSrc" : "img/1-4.jpg", "title" : "7月26日，一名工人在事故现场最后一节车厢上作业。"},
+                    {"imgSrc" : "img/1-5.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"}
+
+                ];
+
+                omaskLeft.onmouseover = function(){
+                    decMove(oLeft,"opacity",100);
+                };
+
+                omaskRight.onmouseover = function(){
+                    decMove(oRight,"opacity",100);
+                };
+
+                omaskLeft.onmouseout = function(){
+                    decMove(oLeft,"opacity",0);
+                };
+
+                omaskRight.onmouseout = function(){
+                    decMove(oRight,"opacity",0);
+                };
+
+                oLeft.onclick = function(){
+
+                };
+
+            };
+    </script>
 </head>
 <body>
     <div id="box">
-        <div class="title"><span>asflampsmaf</span></div>
-        <div class="mask_left"></div>
-        <div class="mask_right"></div>
-        <div class="left"></div>
-        <div class="right"></div>
+        <div id="title"><span>asflampsmaf</span></div>
+        <div id="mask_left"></div>
+        <div id="mask_right"></div>
+        <div id="left"></div>
+        <div id="right"></div>
     </div>
 </body>
 </html>

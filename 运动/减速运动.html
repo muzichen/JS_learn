@@ -45,7 +45,7 @@
                 decMove(_this,"width",100);
             };
 
-            function decMove(oElement,attr,iTarget){
+            function decMove(oElement,attr,iTarget,fn){
                 //开始取消定时器，防止多次点击或移入元素时使移动速度加快
                 clearInterval(oElement.timer);
                 /*
@@ -60,11 +60,17 @@
                     }
                     var iSpeed = (iTarget - iCurrent) / 10;
                     iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
-                    if(attr == "opacity"){
+                    if(iCurrent == iTarget){
+                        clearInterval(oElement.timer);
+                        //回调函数，如果存在fn就执行fn
+                        fn && fn();
+                    }else{
+                        if(attr == "opacity"){
                         oElement.style.opacity = (iCurrent + iSpeed) / 100;
                         oElement.style.filter = ":alpha(opacity=" + (iCurrent+iSpeed) + ")";
-                    }else{
-                        oElement.style[attr] = iCurrent + iSpeed + "px"; 
+                        }else{
+                            oElement.style[attr] = iCurrent + iSpeed + "px"; 
+                        }
                     }
                 },50);
             }
