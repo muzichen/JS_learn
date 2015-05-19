@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>图片切换-载入效果</title>
+    <style type="text/css">
+        body,div,ul,li{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        body{background: #000;}
+        #box{width: 800px; height: auto; margin: 10px auto; text-align: center; position: relative; height: 400px;}
+        #box .title{width: 100%; height: 50px; line-height: 50px; color: #FFFFFF; position: absolute; top:0; left: 0; background: red; opacity: 0.6; filter:alpha(opacity=60);}
+        #box .mask_left,#box .mask_right{width: 400px; height: 100%; position: absolute; top:0;}
+        #box .mask_right{right: 0;}
+        #box .left,#box .right{background: url(img/btn.png) no-repeat; width: 40px; height: 80px; position: absolute; top:50%; cursor: pointer;}
+        #box .right{right: 0; background-position: -40px 0;}
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="title"><span>asflampsmaf</span></div>
+        <div class="mask_left"></div>
+        <div class="mask_right"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>
