@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>减速运动</title>
+    <style type="text/css">
+        *{margin: 0; padding: 0;}
+        div{width: 100px; height: 100px; background: red; margin-top: 5px;}
+    </style>
+    <script type="text/javascript">
+        function getStyle(oElement,attr){
+            if(oElement.currentStyle){
+                return oElement.currentStyle[attr];
+            }else{
+                return getComputedStyle(oElement,null)[attr];
+            }
+        }
+        window.onload = function(){
+            var oBox1 = document.getElementById("box1");
+            var oBox2 = document.getElementById("box2");
+            var oBox3= document.getElementById("box3");
+            var timer = null;
+            oBox1.onmouseover = function(){
+                var _this = this;
+                decMove(_this,"width",400);
+            };
+            oBox2.onmouseover = function(){
+                var _this = this;
+                decMove(_this,"width",400);
+            };
+            oBox3.onmouseover = function(){
+                var _this = this;
+                decMove(_this,"width",400);
+            };
+            oBox1.onmouseout = function(){
+                var _this = this;
+                decMove(_this,"width",100);
+            };
+            oBox2.onmouseout = function(){
+                var _this = this;
+                decMove(_this,"width",100);
+            };
+            oBox3.onmouseout = function(){
+                var _this = this;
+                decMove(_this,"width",100);
+            };
+
+            function decMove(oElement,attr,iTarget){
+                //开始取消定时器，防止多次点击或移入元素时使移动速度加快
+                clearInterval(oElement.timer);
+                /*
+                    oElement.timer:
+                    将定时器加到元素自己身上，相当于每个元素有自己单独的一个定时器，当鼠标从一个元素移到另一个元素激活另一个元素的运动状态时，不会改变之前的元素的运动状态，如果只使用一个定时器，会导致之前的元素的运动状态停止。
+                */
+                oElement.timer = setInterval(function(){
+                    //获得元素当前属性的值
+                    var iCurrent = parseFloat(getStyle(oElement,attr));
+                    if(attr == "opacity"){
+                        iCurrent = parseInt(iCurrent * 100);
+                    }
+                    var iSpeed = (iTarget - iCurrent) / 10;
+                    iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                    if(attr == "opacity"){
+                        oElement.style.opacity = (iCurrent + iSpeed) / 100;
+                        oElement.style.filter = ":alpha(opacity=" + (iCurrent+iSpeed) + ")";
+                    }else{
+                        oElement.style[attr] = iCurrent + iSpeed + "px"; 
+                    }
+                },50);
+            }
+        };
+    </script>
+</head>
+<body>
+    <div id="box1"></div>
+    <div id="box2"></div>
+    <div id="box3"></div>
+</body>
+</html>
