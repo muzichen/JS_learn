@@ -62,8 +62,10 @@
                         如果不将onmouseup设置为null的话会触发这一事件，使得盒子的位子回到最初。
                     */
                     document.onmouseup = null;
+                    //将之前的盒子位置设置成和新的盒子相同
                     oBox.style.left = newBox.offsetLeft + "px";
                     oBox.style.top = newBox.offsetTop + "px";
+                    //移除新的盒子
                     document.body.removeChild(newBox);
                     //释放事件捕获
                     /*if(oBox.releaseCapture){
