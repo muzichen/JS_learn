@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>仿iphone手机解锁效果</title>
+    <style type="text/css">
+        body,div{margin: 0; padding:0;}
+        #phone{width: 426px; height: 640px; background: url(img/1.jpg) no-repeat; margin:10px auto; position: relative;}
+        #phone .btn{width: 93px; height: 62px; background: url(img/btn.jpg) no-repeat; position: absolute; top:546px; left: 36px; cursor:pointer;}
+    </style>
+    <script type="text/javascript">
+        function getByClass(oParent,oClass){
+            var aEl = oParent.getElementsByTagName('*');
+            var result = [];
+            for(var i = 0; i < aEl.length; i++){
+                if(aEl[i].className == oClass){
+                    result.push(aEl[i]);
+                }
+            }
+            return result;
+        }
+
+        function doMove(oElement,iTarget,fn){
+            var timer = setInterval(function(){
+                var iSpeed = (iTarget - oElement.offsetLeft) / 10;
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                if(iTarget == oElement.offsetLeft){
+                    clearInterval(timer);
+                    fn && fn();
+                }else{
+                    oElement.style.left = oElement.offsetLeft + iSpeed + "px";
+                }
+            },20);
+        }
+
+        window.onload = function(){
+            var oPhone = document.getElementById("phone");
+            var oBtn = getByClass(oPhone,"btn")[0];
+            oBtn.onmousedown = function(e){
+                var _this = this;
+                var e = event || window.event;
+                //获取鼠标指针位置与按钮左边缘的距离
+                var oX = e.clientX - this.offsetLeft;
+                document.onmousemove = function(e){
+                    var e = event || window.event;
+                    //获取按钮应该移动到的位置，即按钮相对定位的left值
+                    var x = e.clientX - oX;
+                    //限制x的范围
+                    if(x < 36){
+                        x = 36;
+                    }else if(x > 300){
+                        x = 300;
+                    }
+                    _this.style.left = x + "px";
+
+                    if(_this.offsetLeft == 300){
+                        oPhone.style.background = "url(img/2.jpg) no-repeat";
+                        oBtn.style.display = "none";
+                    }
+
+                    return false;
+                
+                };  
+
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    if(_this.offsetLeft > 150){
+                        //如果按钮超过一半位置直接解锁
+                        doMove(_this,300,function(){
+                            oPhone.style.background = "url(img/2.jpg) no-repeat";
+                            oBtn.style.display = "none";
+                        });
+                    }else{
+                        //如果按钮未超过一半则回到原位置
+                        doMove(_this,36);
+                    }
+                };
+            };
+        };
+    </script>
+</head>
+<body>
+    <div id="phone">
+        <div class="btn">
+            
+        </div>
+    </div>
+</body>
+</html>
