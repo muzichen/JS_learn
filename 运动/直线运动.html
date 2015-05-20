@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>直线运动(目标是页面任意一点)</title>
+    <style type="text/css">
+        *{margin: 0; padding: 0;}
+        #box{width: 100px; height: 100px; top:0; left: 0; position: absolute; background-color: #000;}
+    </style>
+    <script type="text/javascript">
+            window.onload = function(){
+                function doMove(oElement,oTarget,fn){
+                    var oX = oElement.offsetLeft;
+                    var oY = oElement.offsetTop;
+                    var iSpeedX = (oTarget.x - oX) / 5;
+                    var iSpeedY = (oTarget.y - oY) / 5;
+                    iSpeedX > 0 ? Math.ceil(iSpeedX) : Math.floor(iSpeedX);
+                    iSpeedY > 0 ? Math.ceil(iSpeedY) : Math.floor(iSpeedY);
+                    clearInterval(oElement.timer);
+                    oElement.timer = setInterval(function(){
+                            if(oElement.offsetTop == oTarget.y && oElement.offsetLeft == oTarget.x){
+                                //如果到达目标位置，结束定时器
+                                clearInterval(oElement.timer);
+                                if(fn){
+                                    fn();
+                                }
+                            }else{
+                                oElement.style.left = oElement.offsetLeft + iSpeedX + "px";
+                                oElement.style.top = oElement.offsetTop + iSpeedY + "px";
+                            }
+                    },50);
+                }
+                var oBox = document.getElementById("box");
+                doMove(oBox,{x:400,y:500});
+                function getMousePos(e){
+                    var e = event || window.event;
+                    var oPos = {};
+                    oPos = {x:e.clientX,y:e.clientY};
+                    return oPos;
+                }
+            };
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
