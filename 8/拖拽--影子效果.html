@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>拖拽--影子效果</title>
+    <style type="text/css">
+        body,div{margin: 0; padding: 0;}
+        body{background: #3e3e3e;}
+        div{width: 98px; height: 98px; border: 1px solid #FFF; position: absolute; top:10px; left: 10px; background-color: #000; cursor: move;}
+        .new{opacity: 0.4; filter:alpha(opacity=40);}
+    </style>
+    <script type="text/javascript">
+        function getStyle(oEl,attr){
+            if(oEl.currentStyle){
+                return oEl.currentStyle[attr];
+            }else{
+                return getComputedStyle(oEl,null)[attr];
+            }
+        }
+        window.onload = function(){
+            var oBox = document.getElementById("box");
+            oBox.onmousedown = function(e){
+                var e = event || window.event;
+                //获取鼠标指针距离盒子左边缘的距离
+                var oX = e.clientX - this.offsetLeft;
+                var oY = e.clientY - this.offsetTop;
+                /*if(this.setCapture){
+                    this.setCapture();
+                }*/
+                //创建新的盒子用作影子
+
+                var newBox = document.createElement("div");
+                newBox.className = "new";
+                newBox.style.left = parseFloat(getStyle(oBox,"left")) + "px";
+                newBox.style.top = parseFloat(getStyle(oBox,"top")) + "px";
+                document.body.appendChild(newBox);
+
+                //鼠标移动
+
+                document.onmousemove = function(e){
+                    var e = event || window.event;
+                    var newX = e.clientX - oX;
+                    var newY = e.clientY - oY;
+                    //限制盒子的移动范围
+                    var maxX = document.documentElement.clientWidth - oBox.offsetWidth;
+                    var maxY = document.documentElement.clientHeight - oBox.offsetHeight;
+                    newX < 0 && (newX = 0);
+                    newX > maxX && (newX = maxX);
+                    newY < 0 && (newY = 0);
+                    newY > maxY && (newY = maxY);
+
+                    newBox.style.left = newX + "px";
+                    newBox.style.top = newY + "px";
+                    return false;
+                };
+
+                //鼠标释放
+
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    /*
+                        如果不将onmouseup设置为null的话会触发这一事件，使得盒子的位子回到最初。
+                    */
+                    document.onmouseup = null;
+                    oBox.style.left = newBox.offsetLeft + "px";
+                    oBox.style.top = newBox.offsetTop + "px";
+                    document.body.removeChild(newBox);
+                    //释放事件捕获
+                    /*if(oBox.releaseCapture){
+                        oBox.releaseCapture();
+                    }*/
+                    return false;
+                };
+                return false;
+            };
+
+        };
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
