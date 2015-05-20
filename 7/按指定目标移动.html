@@ -4,12 +4,132 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>按指定目标移动</title>
     <style type="text/css">
-        *{margin: 0; padding: 0;}
-        div{position: absolute;}
+        body,div{margin: 0; padding: 0;}
+        input{margin-top: 10px;}
+        div{width:66px; height:45px; position: absolute; background: url(img/1.gif) no-repeat; top:50; left: 10px;}
     </style>
+    <script type="text/javascript">
+            //运动函数
+            function doMove(oElement,oTarget,fn){
+                    clearInterval(oElement.timer);
+                    oElement.timer = setInterval(function(){
+                            var iSpeedX = (oTarget.x - oElement.offsetLeft) / 5;
+                            var iSpeedY = (oTarget.y - oElement.offsetTop) / 5;
+                            iSpeedX =iSpeedX > 0 ? Math.ceil(iSpeedX) : Math.floor(iSpeedX);
+                            iSpeedY = iSpeedY > 0 ? Math.ceil(iSpeedY) : Math.floor(iSpeedY);
+                            if(oElement.offsetTop == oTarget.y && oElement.offsetLeft == oTarget.x){
+                                //如果到达目标位置，结束定时器
+                                clearInterval(oElement.timer);
+                                if(fn){
+                                    fn();
+                                }
+                            }else{
+                                oElement.style.left = oElement.offsetLeft + iSpeedX + "px";
+                                oElement.style.top = oElement.offsetTop + iSpeedY + "px";
+                            }
+                    },50);
+                }
+                //获取鼠标位置
+                function getMousePos(e){
+                    var e = event || window.event;
+                    var oPos = {};
+                    oPos = {x:e.clientX,y:e.clientY};
+                    return oPos;
+                }
+                //取消已有事件函数
+                function cancelEvent(){
+                    var aInp = document.getElementsByTagName("input");
+                    document.onclick = null;
+                    document.onmousedown = null;
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+                window.onload = function(){
+                    var aBtn = document.getElementsByTagName("input");
+                    var oP = document.getElementsByTagName("p")[0];
+                    var oDiv = document.getElementsByTagName("div")[0];
+                    aBtn[0].onclick = function(e){
+                        var e = event || window.event;
+                        //取消事件冒泡
+                        e.cancelBubble = true;
+                        cancelEvent();
+                        this.value = "按鼠标位置移动(已激活)"
+                        aBtn[1].value = "点击按鼠标轨迹移动";
+                        oP.innerHTML = "鼠标点击页面， 人物将移动至鼠标位置！";
+
+                        document.onclick = function(e){
+                            var e = event || window.event;
+                            var curX = e.clientX;
+                            var curY = e.clientY;
+                            oDiv.style.background = "url(img/2.gif) no-repeat";
+                            doMove(oDiv,{x:curX,y:curY},function(){
+                                oDiv.style.background = "url(img/1.gif) no-repeat";
+                            });
+                            //return false;
+                        };
+                    };
+                    //取消按钮1的鼠标释放的冒泡，因为不取消的话在由2状态切换到1状态时会因为onmouseup冒泡到document导致2中的document.onmouseup执行一次
+                    aBtn[0].onmouseup = function(e){
+                        var e = event || window.event;
+                        e.cancelBubble = true;
+                    };
+
+                    aBtn[1].onclick = function(e){
+                        var e = event || window.event;
+                        e.cancelBubble = true;
+                        cancelEvent();
+                        this.value = "按鼠标轨迹移动(已激活)"
+                        aBtn[0].value = "点击按鼠标位置移动";
+                        oP.innerHTML = "按住鼠标左键，在页面划动，人物将按照鼠标轨迹移动。";
+                        var aPos = [{x:oDiv.offsetLeft,y:oDiv.offsetTop}];
+
+                        document.onmousedown = function(e){
+                            var e = event || window.event;
+                            //将鼠标按下的位置push进数组
+                            var curX = e.clientX;
+                            var curY = e.clientY;
+                            aPos.push({x:curX,y:curY});
+
+                            document.onmousemove = function(e){
+                                var e = event || window.event;
+                                var curX = e.clientX;
+                                var curY = e.clientY;
+                                aPos.push({x:curX,y:curY});
+                            }
+                            //取消鼠标按下的默认行为，防止选中文字
+                            return false;
+
+                        }
+
+                        document.onmouseup = function(){
+                            /*
+                                push方法用于在数组末尾添加一个或多个元素，并返回新的长度
+                                pop方法用于删除数组最后一个元素并返回这个元素的值
+                                shift方法用于删除数组第一个元素并返回这个元素的值
+                                unshift方法用于在数组前端添加一个或多个元素，并返回新的长度
+                            */
+                            //取消鼠标移动事件
+                            document.onmousemove = null;
+                            oDiv.style.background = "url(img/2.gif) no-repeat";
+                            var timer = setInterval(function(){
+                                if(aPos.length == 0){
+                                    clearInterval(timer);
+                                    oDiv.style.background = "url(img/1.gif) no-repeat";
+                                    return;//阻止代码继续向下执行
+                                }
+                                oDiv.style.left = aPos[0].x + "px";
+                                oDiv.style.top = aPos[0].y + "px";
+                                aPos.shift();
+                            },30);
+                        }
+
+                    };
+                };
+    </script>
 </head>
 <body>
     <input type="button" value="点击按鼠标位置移动"><input type="button" value="点击按鼠标轨迹移动">
     <p>点击按钮激活相应的运动类型</p>
+    <div></div>
 </body>
 </html>
