@@ -9,10 +9,10 @@
         body{background: #000;}
         #box{width: 800px; height: auto; margin: 10px auto; text-align: center; position: relative; height: 400px;}
         #box.loading{background: url(img/loading.gif) no-repeat 50% 50%;}
-        #title{width: 100%; height: 50px; line-height: 50px; color: #FFFFFF; position: absolute; top:0; left: 0; background: red; opacity: 0.6; filter:alpha(opacity=60);}
+        #title{width: 100%; height: 50px; line-height: 50px; color: #FFFFFF; position: absolute; top:0; left: 0; background: #000000; opacity: 0.8; filter:alpha(opacity=80);}
         #mask_left,#mask_right{width: 400px; height: 100%; position: absolute; top:0;}
         #mask_right{right: 0;}
-        #left,#right{background: url(img/btn.png) no-repeat; width: 40px; height: 80px; position: absolute; top:50%; cursor: pointer; opacity: 0; filter:alpha(opacity=0); z-index: 999;}
+        #left,#right{background: url(img/btn.png) no-repeat; width: 40px; height: 80px; position: absolute; top:50%; cursor: pointer; opacity: 0; filter:alpha(opacity=0);margin-top: -40px;}
         #right{right: 0; background-position: -40px 0;opacity: 0; filter:alpha(opacity=0);}
     </style>
     <script type="text/javascript">
@@ -61,6 +61,7 @@
                 var omaskRight = document.getElementById("mask_right");
                 var oTitle = document.getElementById("title");
                 var oSpan = oTitle.getElementsByTagName("span")[0];
+                var now = 0;
                 var aImg = [
                     {"imgSrc" : "img/1-1.jpg", "title" : "7月26日，吊车将事故现场的车头残片吊至大型运输车辆上。"},
                     {"imgSrc" : "img/1-2.jpg", "title" : "7月26日，一辆大卡车准备驶离事故现场。"},
@@ -69,6 +70,57 @@
                     {"imgSrc" : "img/1-5.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"}
 
                 ];
+
+                //页面载入初始化
+                loadImg();
+
+                oRight.onclick = function(){
+                    if(now >= aImg.length - 1){
+                        alert("这是最后一张图片了");
+                        return;
+                    }
+                    now++;
+                    loadImg();
+                };
+
+                oLeft.onclick = function(){
+                    if(now <= 0){
+                        alert("再往前没有图片了哦！");
+                        return;
+                    }
+                    now--;
+                    loadImg();
+                };
+
+                function loadImg(){
+                    //初始化
+                    oBox.className = "loading";
+                    oTitle.style.height = 0;
+                    oSpan.style.opacity = 0;
+                    oSpan.style.filter = "alpha(opacity=0)";
+                    //检测box中是否有图片，有的画先将图片移除
+                    var oldImg = oBox.getElementsByTagName("img");
+                    if(oldImg[0]){
+                        oBox.removeChild(oldImg[0]);
+                    }
+                    //创建新的图片对象
+                    var newImg = document.createElement("img");
+                    var oImg = new Image();
+                    oImg.onload = function(){
+                        oBox.className = "";
+                        newImg.src = this.src;
+                        //设置图片的宽和高
+                        newImg.style.width = oBox.offsetWidth + "px";
+                        newImg.style.height = oBox.offsetHeight + "px";
+                        oBox.appendChild(newImg);
+                        oSpan.innerHTML = aImg[now].title;
+                        decMove(oTitle,"height",50,function(){
+                            decMove(oSpan,"opacity",100);
+                        });
+                    };
+                    oImg.src = aImg[now].imgSrc;
+                }
+                
 
                 omaskLeft.onmouseover = function(){
                     decMove(oLeft,"opacity",100);
@@ -86,16 +138,32 @@
                     decMove(oRight,"opacity",0);
                 };
 
-                oLeft.onclick = function(){
-
+                oLeft.onmouseover = function(){
+                    decMove(oLeft,"opacity",100);
                 };
+
+                oRight.onmouseover = function(){
+                    decMove(oRight,"opacity",100);
+                };
+
+                oLeft.onmouseout = function(){
+                    decMove(oLeft,"opacity",0);
+                };
+
+                oRight.onmouseout = function(){
+                    decMove(oRight,"opacity",0);
+                };
+
+
+
+
 
             };
     </script>
 </head>
 <body>
     <div id="box">
-        <div id="title"><span>asflampsmaf</span></div>
+        <div id="title"><span></span></div>
         <div id="mask_left"></div>
         <div id="mask_right"></div>
         <div id="left"></div>
