@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>自定义滚动条</title>
+    <style type="text/css">
+        body,div,ul,li,p{margin: 0; padding: 0;}
+        ul,li{list-style: none;}
+        body{background-color: #3e3e3e;}
+        .clear:after{content: ""; display: block; visibility: hidden; clear: both;}
+        #content{width: 800px; overflow: hidden;margin: 10px auto;}
+        #slide{width: 600px; height: 144px; background-color: #3e3e3e; overflow: hidden; margin: 0 auto; border-radius: 8px; margin-bottom: 10px; position: relative;}
+        #slide ul {height: 144px; position: absolute; top:0; left: 0;}
+        #slide ul li{float: left; background-color: #000; border-radius: 8px; margin-right: 6px;width: 144px; height: 144px;}
+        #slide ul li img{width: 124px; height: 100px; border-radius: 5px; margin: 10px 0 0 10px;}
+        #slide ul li p{color: #ffffff; text-align: center; line-height: 35px;}
+
+        #scrollbar{width: 600px;height: 19px; margin:0 auto;}
+        #scrollbar .barLeft{width: 32px; height: 19px; background: url(img/03.gif) no-repeat 0 0; float: left;}
+        #scrollbar .barRight{width: 32px; height: 19px; background: url(img/03.gif) no-repeat -32px 0; float: left;}
+        #scrollbar .barMid{width: 536px; background: #000; height: 17px; float: left; border-top: 1px solid #545454; border-bottom: 1px solid #545454; position: relative;}
+        #scrollbar .barMid .bar{width: 150px; height: 15px; background: url(img/01.gif) repeat-x; position: absolute; top:1px; cursor:pointer;}
+        #scrollbar .barMid .bar .barL,#scrollbar .barMid .bar .barR{width: 6px; height: 15px; background: url(img/02.gif) no-repeat; position: absolute;}
+        #scrollbar .barMid .bar .barL{ left: -6px;}
+        #scrollbar .barMid .bar .barR{right:-6px; background-position: -6px 0;}
+        #dec{width: 580px; padding: 10px; margin: 0 auto; border: 1px dashed #999; color: #ccc; font-size: 14px;}
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="slide">
+            <ul class="clear">
+                <li><img src="img/1.jpg" alt="1"><p>iPhone 4</p></li>
+                <li><img src="img/2.jpg" alt="2"><p>iPad 2</p></li>
+                <li><img src="img/3.jpg" alt="3"><p>iPod touch</p></li>
+                <li><img src="img/4.jpg" alt="4"><p>iPod classic</p></li>
+                <li><img src="img/5.jpg" alt="5"><p>iPod shuffle</p></li>
+                <li><img src="img/6.jpg" alt="6"><p>iPod nano</p></li>
+                <li><img src="img/7.jpg" alt="7"><p>MacBook Air</p></li>
+                <li><img src="img/8.jpg" alt="8"><p>MacBook Pro</p></li>
+                <li><img src="img/9.jpg" alt="9"><p>Mac mini</p></li>
+                <li><img src="img/10.jpg" alt="10"><p>Mac Pro</p></li>
+            </ul>
+        </div>
+        <div id="scrollbar">
+            <div class="barLeft"></div>
+            <div class="barMid clear">
+                <div class="bar">
+                    <div class="barL"></div>
+                    <div class="barR"></div>
+                </div>
+            </div>
+            <div class="barRight"></div>
+        </div>
+    </div>
+    <div id="dec">
+        <dt>功能说明：</dt>
+        <dd>1、拖动滚动条，图片列表缓冲滑动至目标点；</dd>
+        <dd>2、滚动条两端鼠标移入自动滑动；</dd>
+        <dd>3、滚动条滑动到两端自动更换为停止标识；</dd>
+        <dd>4、点击滚动条黑色背景区，滚动条及图片列表缓冲滑动至目标点；</dd>
+        <dd>5、支持键盘左右键；</dd>
+        <dd>6、支持鼠标滚轮。</dd>
+    </div>
+</body>
+</html>

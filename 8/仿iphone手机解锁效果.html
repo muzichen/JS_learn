@@ -5,7 +5,7 @@
     <title>仿iphone手机解锁效果</title>
     <style type="text/css">
         body,div{margin: 0; padding:0;}
-        #phone{width: 426px; height: 640px; background: url(img/1.jpg) no-repeat; margin:10px auto; position: relative;}
+        #phone{width: 426px; height: 640px; background: url(img/phone/1.jpg) no-repeat; margin:10px auto; position: relative;}
         #phone .btn{width: 93px; height: 62px; background: url(img/btn.jpg) no-repeat; position: absolute; top:546px; left: 36px; cursor:pointer;}
     </style>
     <script type="text/javascript">
@@ -54,7 +54,7 @@
                     _this.style.left = x + "px";
 
                     if(_this.offsetLeft == 300){
-                        oPhone.style.background = "url(img/2.jpg) no-repeat";
+                        oPhone.style.background = "url(img/phone/2.jpg) no-repeat";
                         oBtn.style.display = "none";
                     }
 
@@ -67,7 +67,7 @@
                     if(_this.offsetLeft > 150){
                         //如果按钮超过一半位置直接解锁
                         doMove(_this,300,function(){
-                            oPhone.style.background = "url(img/2.jpg) no-repeat";
+                            oPhone.style.background = "url(img/phone/2.jpg) no-repeat";
                             oBtn.style.display = "none";
                         });
                     }else{
