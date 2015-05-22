@@ -30,10 +30,10 @@
                     },50);
                 }
                 //获取鼠标位置
-                function getMousePos(e){
-                    var e = event || window.event;
+                function getMousePos(event){
+                    var event = event || window.event;
                     var oPos = {};
-                    oPos = {x:e.clientX,y:e.clientY};
+                    oPos = {x:event.clientX,y:event.clientY};
                     return oPos;
                 }
                 //取消已有事件函数
@@ -48,19 +48,19 @@
                     var aBtn = document.getElementsByTagName("input");
                     var oP = document.getElementsByTagName("p")[0];
                     var oDiv = document.getElementsByTagName("div")[0];
-                    aBtn[0].onclick = function(e){
-                        var e = event || window.event;
+                    aBtn[0].onclick = function(event){
+                        var event = event || window.event;
                         //取消事件冒泡
-                        e.cancelBubble = true;
+                        event.cancelBubble = true;
                         cancelEvent();
                         this.value = "按鼠标位置移动(已激活)"
                         aBtn[1].value = "点击按鼠标轨迹移动";
                         oP.innerHTML = "鼠标点击页面， 人物将移动至鼠标位置！";
 
-                        document.onclick = function(e){
-                            var e = event || window.event;
-                            var curX = e.clientX;
-                            var curY = e.clientY;
+                        document.onclick = function(event){
+                            var event = event || window.event;
+                            var curX = event.clientX;
+                            var curY = event.clientY;
                             oDiv.style.background = "url(img/2.gif) no-repeat";
                             doMove(oDiv,{x:curX,y:curY},function(){
                                 oDiv.style.background = "url(img/1.gif) no-repeat";
@@ -69,31 +69,31 @@
                         };
                     };
                     //取消按钮1的鼠标释放的冒泡，因为不取消的话在由2状态切换到1状态时会因为onmouseup冒泡到document导致2中的document.onmouseup执行一次
-                    aBtn[0].onmouseup = function(e){
-                        var e = event || window.event;
-                        e.cancelBubble = true;
+                    aBtn[0].onmouseup = function(event){
+                        var event = event || window.event;
+                        event.cancelBubble = true;
                     };
 
-                    aBtn[1].onclick = function(e){
-                        var e = event || window.event;
-                        e.cancelBubble = true;
+                    aBtn[1].onclick = function(event){
+                        var event = event || window.event;
+                        event.cancelBubble = true;
                         cancelEvent();
                         this.value = "按鼠标轨迹移动(已激活)"
                         aBtn[0].value = "点击按鼠标位置移动";
                         oP.innerHTML = "按住鼠标左键，在页面划动，人物将按照鼠标轨迹移动。";
                         var aPos = [{x:oDiv.offsetLeft,y:oDiv.offsetTop}];
 
-                        document.onmousedown = function(e){
-                            var e = event || window.event;
+                        document.onmousedown = function(event){
+                            var event = event || window.event;
                             //将鼠标按下的位置push进数组
-                            var curX = e.clientX;
-                            var curY = e.clientY;
+                            var curX = event.clientX;
+                            var curY = event.clientY;
                             aPos.push({x:curX,y:curY});
 
-                            document.onmousemove = function(e){
-                                var e = event || window.event;
-                                var curX = e.clientX;
-                                var curY = e.clientY;
+                            document.onmousemove = function(event){
+                                var event = event || window.event;
+                                var curX = event.clientX;
+                                var curY = event.clientY;
                                 aPos.push({x:curX,y:curY});
                             }
                             //取消鼠标按下的默认行为，防止选中文字

@@ -36,15 +36,15 @@
         window.onload = function(){
             var oPhone = document.getElementById("phone");
             var oBtn = getByClass(oPhone,"btn")[0];
-            oBtn.onmousedown = function(e){
+            oBtn.onmousedown = function(event){
                 var _this = this;
-                var e = event || window.event;
+                var event = event || window.event;
                 //获取鼠标指针位置与按钮左边缘的距离
-                var oX = e.clientX - this.offsetLeft;
-                document.onmousemove = function(e){
-                    var e = event || window.event;
+                var oX = event.clientX - this.offsetLeft;
+                document.onmousemove = function(event){
+                    var event = event || window.event;
                     //获取按钮应该移动到的位置，即按钮相对定位的left值
-                    var x = e.clientX - oX;
+                    var x = event.clientX - oX;
                     //限制x的范围
                     if(x < 36){
                         x = 36;

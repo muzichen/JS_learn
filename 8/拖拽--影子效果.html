@@ -19,11 +19,11 @@
         }
         window.onload = function(){
             var oBox = document.getElementById("box");
-            oBox.onmousedown = function(e){
-                var e = event || window.event;
+            oBox.onmousedown = function(event){
+                var event = event || window.event;
                 //获取鼠标指针距离盒子左边缘的距离
-                var oX = e.clientX - this.offsetLeft;
-                var oY = e.clientY - this.offsetTop;
+                var oX = event.clientX - this.offsetLeft;
+                var oY = event.clientY - this.offsetTop;
                 /*if(this.setCapture){
                     this.setCapture();
                 }*/
@@ -37,10 +37,10 @@
 
                 //鼠标移动
 
-                document.onmousemove = function(e){
-                    var e = event || window.event;
-                    var newX = e.clientX - oX;
-                    var newY = e.clientY - oY;
+                document.onmousemove = function(event){
+                    var event = event || window.event;
+                    var newX = event.clientX - oX;
+                    var newY = event.clientY - oY;
                     //限制盒子的移动范围
                     var maxX = document.documentElement.clientWidth - oBox.offsetWidth;
                     var maxY = document.documentElement.clientHeight - oBox.offsetHeight;

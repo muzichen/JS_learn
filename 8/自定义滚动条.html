@@ -91,16 +91,16 @@
             var oUl_Len = (aLi[0].offsetWidth + limarginRight) * aLi.length; 
             oUl.style.width = oUl_Len + "px";
             //滚动条鼠标滚动，鼠标移动滚动条动，释放鼠标图片滚动
-            oBar.onmousedown = function(e){
-                var e = event || window.event;
+            oBar.onmousedown = function(event){
+                var event = event || window.event;
                 //获取鼠标指针位置距离滚动条左边缘的距离
-                e.cancelBubble = true;
-                var disX = e.clientX - this.offsetLeft;
+                event.cancelBubble = true;
+                var disX = event.clientX - this.offsetLeft;
                 var _this = this;
-                document.onmousemove = function(e){
-                    var e = event || window.event;
+                document.onmousemove = function(event){
+                    var event = event || window.event;
                     //获取滚动条新left
-                    var oL = e.clientX - disX;
+                    var oL = event.clientX - disX;
                     //限制滚动条的滚动范围
                     //var maxL = oBarMid.offsetWidth - _this.offsetWidth;
                     if(oL <= 0) oL = 0;
@@ -124,13 +124,13 @@
 
 
             //左右按钮鼠标滑过时图片和滚动条是匀速运动
-            obarLeft.onmouseover = obarRight.onmouseover = document.onkeydown = function(e){
-                var e = event || window.event;
+            obarLeft.onmouseover = obarRight.onmouseover = document.onkeydown = function(event){
+                var event = event || window.event;
                 var iSpeed = 0;
                 clearInterval(timer);
-                if(this == obarLeft || e.keyCode == 37){
+                if(this == obarLeft || event.keyCode == 37){
                     iSpeed = -5;
-                }else if(this == obarRight || e.keyCode == 39){
+                }else if(this == obarRight || event.keyCode == 39){
                     iSpeed = 5;
                 }
                 //这个地方可以封装为一个函数，便于重用
@@ -148,9 +148,9 @@
             };
 
             //点击中间黑色区域
-            oBarMid.onclick = function(e){
-                var e = event || window.event;
-                var curX = e.clientX;
+            oBarMid.onclick = function(event){
+                var event = event || window.event;
+                var curX = event.clientX;
                 var iTarget = curX - oContent.offsetLeft - this.offsetLeft - oBar.offsetWidth / 2;
                 //doMove(oBar,iTarget,30);
                 allMove(iTarget,30,function(){

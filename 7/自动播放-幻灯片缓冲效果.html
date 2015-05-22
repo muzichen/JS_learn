@@ -8,8 +8,8 @@
         ul,li{list-style: none;}
         body{background-color: #000000; text-align: center;}
         #slide{width: 404px; height: 174px; border-radius: 3px; margin: 10px auto; background-color: #FFFFFF; border:8px solid #FFFFFF; overflow: hidden; position: relative;}
-        #slide .slide_content ul{position: absolute;}
-        #slide .slide_content ul li{overflow: hidden; width: 404px; height: 174px;}
+        #slide .slide_content ul{position: absolute; top:0; left: 0;}
+        #slide .slide_content ul li{width: 404px; height: 174px;}
         #slide .slide_content ul li img{width: 404px; height: 174px;}
         #slide .circle{position: absolute; bottom: 0; right: 0;}
         #slide .circle ul li{float: left; width: 22px; height: 22px; line-height: 22px; color: #FFFFFF; background-color: blue; border-radius: 22px; margin-left: 5px; opacity: 0.4; filter:alpha(opacity=40); cursor: pointer;}
@@ -33,41 +33,43 @@
                 var oUl = oSlide.getElementsByTagName("ul")[0];
                 var oSlide_content = getByClass(oSlide,"slide_content")[0];
                 var contentLi = oSlide_content.getElementsByTagName("li");
+                var aImg = oSlide_content.getElementsByTagName('img');
                 var oCircle = getByClass(oSlide,"circle")[0];
                 var circleLi = oCircle.getElementsByTagName("li");
-                var oHeight = contentLi[0].offsetHeight;
+                var oHeight = aImg[0].offsetHeight;
                 var timer = autoPlayTimer = null;
                 var _index = 0;
                 var offOn = true;
                 for(var i = 0; i < circleLi.length; i++){
                     circleLi[i].index = i;
                     circleLi[i].onmouseover = function(){
-                        var _this = this;
+                        var index = this.index;
                         for(var i = 0; i < circleLi.length; i++){
                             circleLi[i].className = "";
                         }
                         this.className = "on";
-                        doMove(oUl,-(this.index * oHeight));
+                        doMove(oUl,-(index * oHeight));
                     };
                     circleLi[i].onmouseout = function(){
                         this.className = "";
                     };
                 }
+
                 //页面第一次载入自动播放
-                autoPlay();
+                //autoPlay();
 
 
                 //鼠标移入幻灯区停止自动播放
                 oSlide.onmouseover = function(){
-                    clearInterval(autoPlayTimer);
+                    //clearInterval(autoPlayTimer);
                 };
                 //鼠标移出幻灯区恢复自动播放
                 oSlide.onmouseout = function(){
-                    autoPlay();
+                   // autoPlay();
                 };
 
                 //自动播放函数
-                function autoPlay(){
+                /*function autoPlay(){
                     autoPlayTimer = setInterval(function(){
                         offOn ? _index++ : _index--;
                         if(_index < 0){
@@ -83,7 +85,7 @@
                         circleLi[_index].className = "on";
                         doMove(oUl,-(_index * oHeight));
                     },1000);  
-                }
+                }*/
 
 
                 //滑动函数
@@ -91,7 +93,7 @@
                         clearInterval(timer);
                         timer = setInterval(function(){
                             var iSpeed = (iTarget - oUl.offsetTop)/10;
-                            iSpeed < 0 ? iSpeed = Math.floor(iSpeed) : iSpeed = Math.ceil(iSpeed);
+                            iSpeed = iSpeed < 0 ? Math.floor(iSpeed) : Math.ceil(iSpeed);
                             if(iElement.offsetTop == iTarget){
                                 clearInterval(timer);
                             }else{
