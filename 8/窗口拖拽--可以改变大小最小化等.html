@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>窗口拖拽--可以改变大小最小化等</title>
+    <style type="text/css">
+        body,div,h2{margin: 0; padding: 0;}
+        body{background: url(img/bg.jpg);}
+        a{text-decoration: none;}
+        ul,li{list-style: none;}
+        .open{display: block; width: 21px; height: 19px;margin:200px auto; text-indent: -999px; background: url(img/tool.png) no-repeat 0 0;}
+        .clear:after{content: ""; display: block; visibility: hidden; clear: both;}
+        #box{width: 288px; height: 160px; border: 1px solid #000; box-shadow: 0 2px 2px 2px #999; margin: 40px auto; padding: 0 6px; background: #e9e9e9; position: relative;}
+        #top{height: 32px; border-bottom: 1px solid #a1b4b0; line-height: 32px; cursor: move;}
+        #top h2{font-size: 14px; font-weight: 600; color:#000; float: left;}
+        #top .button{float:right;height: 32px; margin-top: 7px;}
+        #top .button a{width: 21px; height: 19px; display: inline-block; background: url(img/tool.png) no-repeat; text-indent: -999px;}
+        #top .button a.min{background-position: -29px 0;}
+        #top .button a.min:hover{background-position: -29px -29px;}
+        #top .button a.max{background-position: -60px 0;}
+        #top .button a.max:hover{background-position: -60px -29px;}
+        #top .button a.close{background-position: -89px 0;}
+        #top .button a.close:hover{background-position: -89px -29px;}
+        #bottom{font-size: 12px; line-height: 18px;}
+
+        #box .br,#box .bl,#box .tl,#box .tr{width: 14px; height: 14px;position: absolute;}
+        #box .br{background: url(img/resize.png) no-repeat;right: 0; bottom: 0; cursor: se-resize;}
+        #box .bl{bottom: 0; left: 0; cursor: sw-resize;}
+        #box .tl{top:0; left: 0; cursor: nw-resize;}
+        #box .tr{top:0; right: 0; cursor: ne-resize;}
+        #box .t,#box .r,#box .b,#box .l{position: absolute;}
+        #box .t,#box .b{width: 300px; height: 3px; left: 0; cursor: n-resize;}
+        #box .t{ top:0;}
+        #box .b{bottom: 0;}
+        #box .r,#box .l{width: 3px; height: 160px; top:0; cursor: e-resize;}
+        #box .r{right: 0;}
+        #box .l{left: 0;}
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="top" class="clear">
+            <h2>这是一个可以拖动的窗口</h2>
+            <div class="button">
+                    <a href="javascript:;" class="min">min</a>
+                    <a href="javascript:;" class="max">max</a>
+                    <a href="javascript:;" class="close">close</a>
+            </div>
+        </div>
+        <div class="t"></div>
+        <div class="r"></div>
+        <div class="b"></div>
+        <div class="l"></div>
+        <div class="tr"></div>
+        <div class="br"></div>
+        <div class="bl"></div>
+        <div class="tl"></div>
+        <div id="bottom">
+            ①窗口可以拖动；<br />
+            ②窗口可以通过八个方向改变大小；<br />
+            ③窗口可以最小化、最大化、还原、关闭；<br />
+            ④限制窗口最小宽度/高度。
+        </div>
+    </div>
+    <a href="javascript:;" class="open">开启</a>
+</body>
+</html>
