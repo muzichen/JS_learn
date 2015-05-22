@@ -8,23 +8,192 @@
         ul,li{list-style: none;}
         body{background-color: #3e3e3e;}
         .clear:after{content: ""; display: block; visibility: hidden; clear: both;}
-        #content{width: 800px; overflow: hidden;margin: 10px auto;}
-        #slide{width: 600px; height: 144px; background-color: #3e3e3e; overflow: hidden; margin: 0 auto; border-radius: 8px; margin-bottom: 10px; position: relative;}
+        #content{width:600px; overflow: hidden;margin: 10px auto;}
+        #slide{width: 600px; height: 144px; background-color: #3e3e3e; overflow: hidden;border-radius: 8px; margin-bottom: 10px; position: relative;}
         #slide ul {height: 144px; position: absolute; top:0; left: 0;}
-        #slide ul li{float: left; background-color: #000; border-radius: 8px; margin-right: 6px;width: 144px; height: 144px;}
+        #slide ul li{float: left; background-color: #000; border-radius: 8px; margin-right: 8px;width: 144px; height: 144px;}
         #slide ul li img{width: 124px; height: 100px; border-radius: 5px; margin: 10px 0 0 10px;}
         #slide ul li p{color: #ffffff; text-align: center; line-height: 35px;}
 
-        #scrollbar{width: 600px;height: 19px; margin:0 auto;}
-        #scrollbar .barLeft{width: 32px; height: 19px; background: url(img/03.gif) no-repeat 0 0; float: left;}
-        #scrollbar .barRight{width: 32px; height: 19px; background: url(img/03.gif) no-repeat -32px 0; float: left;}
-        #scrollbar .barMid{width: 536px; background: #000; height: 17px; float: left; border-top: 1px solid #545454; border-bottom: 1px solid #545454; position: relative;}
-        #scrollbar .barMid .bar{width: 150px; height: 15px; background: url(img/01.gif) repeat-x; position: absolute; top:1px; cursor:pointer;}
+        #scrollbar{width: 600px;height: 19px; margin:0 auto; position: relative;}
+        #scrollbar .barLeft,#scrollbar .barLeftStop{width: 29px; height: 19px; background: url(img/03.gif) no-repeat 0 0; float: left; cursor: pointer;}
+        #scrollbar .barRight,#scrollbar .barRightStop{width: 29px; height: 19px; background: url(img/03.gif) no-repeat -32px 0; float: left; cursor: pointer;}
+        #scrollbar .barLeftStop{background-position: 0 -19px;}
+        #scrollbar .barRightStop{background-position: -31px -19px;}
+        #scrollbar .barMid{width: 536px; background: #000; height: 17px; float: left; border-top: 1px solid #545454; border-bottom: 1px solid #545454; position: relative; cursor: pointer;}
+        #scrollbar .barMid .bar{width: 150px; height: 15px; background: url(img/01.gif) repeat-x; position: absolute; top:1px; cursor:e-resize;}
         #scrollbar .barMid .bar .barL,#scrollbar .barMid .bar .barR{width: 6px; height: 15px; background: url(img/02.gif) no-repeat; position: absolute;}
         #scrollbar .barMid .bar .barL{ left: -6px;}
         #scrollbar .barMid .bar .barR{right:-6px; background-position: -6px 0;}
-        #dec{width: 580px; padding: 10px; margin: 0 auto; border: 1px dashed #999; color: #ccc; font-size: 14px;}
+        #dec{width: 580px; padding: 10px; margin: 0 auto; border: 1px dashed #999; color: #fff; font-size: 14px;}
+        #dec .none{color: red; text-decoration: line-through;}
+        #dec .copyright{float: right;}
+        #dec .copyright a{text-decoration: none; font-size: 16px; color:blue; }
     </style>
+    <script type="text/javascript">
+
+        function getStyle(obj,attr){
+            if(obj.currentStyle){
+                return obj.currentStyle[attr];
+            }else{
+                return getComputedStyle(obj,null)[attr];
+            }
+        }
+
+        function getByClass(oParent,oClass){
+            var aEl = oParent.getElementsByTagName('*');
+            var result = [];
+            for(var i = 0;i < aEl.length;i++){
+                if(aEl[i].className == oClass){
+                    result.push(aEl[i]);
+                }
+            }
+            return result;
+        }
+
+        function doMove(oEl,iTarget,time,fn){
+
+            clearInterval(oEl.timer);
+
+            oEl.timer = setInterval(function(){
+                var iCur = oEl.offsetLeft;
+                var iSpeed = (iTarget - iCur) / 10;
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+                if(iCur == iTarget){
+                    clearInterval(oEl.timer);
+                    fn && fn();
+                }else{
+                    oEl.style.left = iCur + iSpeed + "px";
+                }
+
+            },time);
+        }
+
+
+
+        window.onload = function(){
+            var oContent = document.getElementById("content");
+            var oSlide= document.getElementById("slide");
+            var oUl = oSlide.getElementsByTagName("ul")[0];
+            var aLi = oUl.getElementsByTagName('li');
+            var limarginRight = parseFloat(getStyle(aLi[0],"marginRight"));
+            var oScrollBar = document.getElementById("scrollbar");
+            var oBar = getByClass(oScrollBar,"bar")[0];
+            var oBarMid = getByClass(oScrollBar,"barMid clear")[0];
+            var obarLeft = getByClass(oScrollBar,"barLeft")[0];
+            var obarRight = getByClass(oScrollBar,"barRight")[0];
+            var maxL = oBarMid.offsetWidth - oBar.offsetWidth;
+            var iRate = 0;
+            var timer = null;
+
+            //初始化ul的宽度使图片在一行排列
+            var oUl_Len = (aLi[0].offsetWidth + limarginRight) * aLi.length; 
+            oUl.style.width = oUl_Len + "px";
+            //滚动条鼠标滚动，鼠标移动滚动条动，释放鼠标图片滚动
+            oBar.onmousedown = function(e){
+                var e = event || window.event;
+                //获取鼠标指针位置距离滚动条左边缘的距离
+                e.cancelBubble = true;
+                var disX = e.clientX - this.offsetLeft;
+                var _this = this;
+                document.onmousemove = function(e){
+                    var e = event || window.event;
+                    //获取滚动条新left
+                    var oL = e.clientX - disX;
+                    //限制滚动条的滚动范围
+                    //var maxL = oBarMid.offsetWidth - _this.offsetWidth;
+                    if(oL <= 0) oL = 0;
+                    if(oL >= maxL) oL = maxL;
+                    _this.style.left = oL + "px"
+                    //求出滚动条滚动比例用来控制图片的滑动
+                    iRate = oL / maxL;
+ 
+                    return false;
+                }
+
+                document.onmouseup = function(){
+                    doMove(oUl,parseInt((oSlide.offsetWidth - oUl.offsetWidth) * iRate),20);
+                    isStop();
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                };
+                return false;
+            }
+
+
+
+            //左右按钮鼠标滑过时图片和滚动条是匀速运动
+            obarLeft.onmouseover = obarRight.onmouseover = document.onkeydown = function(e){
+                var e = event || window.event;
+                var iSpeed = 0;
+                clearInterval(timer);
+                if(this == obarLeft || e.keyCode == 37){
+                    iSpeed = -5;
+                }else if(this == obarRight || e.keyCode == 39){
+                    iSpeed = 5;
+                }
+                //这个地方可以封装为一个函数，便于重用
+                timer = setInterval(function(){
+                    allMove(oBar.offsetLeft + iSpeed,1,function(){
+                        isStop();
+                    });
+                },30);
+                        
+            };
+
+            obarLeft.onmouseout = obarRight.onmouseout = document.onkeyup = function()
+            {
+                clearInterval(timer);
+            };
+
+            //点击中间黑色区域
+            oBarMid.onclick = function(e){
+                var e = event || window.event;
+                var curX = e.clientX;
+                var iTarget = curX - oContent.offsetLeft - this.offsetLeft - oBar.offsetWidth / 2;
+                //doMove(oBar,iTarget,30);
+                allMove(iTarget,30,function(){
+                    isStop();
+                });
+            };
+
+            //鼠标滚轮实现滚动条和图片滑动,只要进入slide区域就激活滚轮事件
+            /*oContent.onmouseover = function(e){
+                var e = event || window.event;
+
+            }*/
+
+
+            //图片和滚动条一块滚动的函数
+            function allMove(iTarget,time,fn){
+                    //var iTarget = oBar.offsetLeft + iSpeed;
+                    if(iTarget <= 0) iTarget = 0;
+                    if(iTarget >= maxL ) iTarget = maxL;
+                    iRate = iTarget / maxL;
+                    //滚动条移动
+                    doMove(oBar,iTarget,time,fn);
+                    //图片列表移动
+                    doMove(oUl,parseInt((oSlide.offsetWidth - oUl.offsetWidth) * iRate),time,fn);
+            }
+
+            //判断是否到达边界的函数
+            function isStop(){
+                obarLeft.className = "barLeft";
+                obarRight.className = "barRight";
+                if(oBar.offsetLeft == oBarMid.offsetWidth - oBar.offsetWidth){
+                    obarRight.className = "";
+                    obarRight.className = "barRightStop";
+                }else if(oBar.offsetLeft == 0){
+                    obarLeft.className = "";
+                    obarLeft.className = "barLeftStop";
+                }
+            };
+            isStop();
+            
+            
+        };
+    </script>
 </head>
 <body>
     <div id="content">
@@ -53,14 +222,15 @@
             <div class="barRight"></div>
         </div>
     </div>
-    <div id="dec">
+    <div id="dec" class="clear">
         <dt>功能说明：</dt>
         <dd>1、拖动滚动条，图片列表缓冲滑动至目标点；</dd>
         <dd>2、滚动条两端鼠标移入自动滑动；</dd>
         <dd>3、滚动条滑动到两端自动更换为停止标识；</dd>
         <dd>4、点击滚动条黑色背景区，滚动条及图片列表缓冲滑动至目标点；</dd>
         <dd>5、支持键盘左右键；</dd>
-        <dd>6、支持鼠标滚轮。</dd>
+        <dd class="none">6、支持鼠标滚轮。</dd>
+        <dd class="copyright">Refer:<a href="http://js.fgm.cc/learn/lesson8/01.html">Ferris</a></dd>
     </div>
 </body>
 </html>
