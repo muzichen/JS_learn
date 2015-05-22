@@ -26,13 +26,13 @@
                 var timer = null;//定时器
 
                 //鼠标按下激活拖拽事件
-                oDrag.onmousedown = function(e){
+                oDrag.onmousedown = function(event){
                     //alert(1);
-                    var e = event || window.event;
+                    var event = event || window.event;
                     isDrag= true;
                     //获得鼠标点击区域距离div边框的距离
-                    posX = e.clientX - oBox.offsetLeft;
-                    posY = e.clientY - oBox.offsetTop;
+                    posX = event.clientX - oBox.offsetLeft;
+                    posY = event.clientY - oBox.offsetTop;
 
                     //获得此时div的位置存入数组
                     pos.push({x:oBox.offsetLeft,y:oBox.offsetTop});
@@ -44,12 +44,12 @@
 
                 };
                 //用document解决鼠标移动比div移动快的问题
-                document.onmousemove = function(e){
+                document.onmousemove = function(event){
                     if(!isDrag) return;
-                    var e = event || window.event;
+                    var event = event || window.event;
                     //获得当前div的left和top值
-                    var divLeft = e.clientX - posX;
-                    var divTop = e.clientY - posY;
+                    var divLeft = event.clientX - posX;
+                    var divTop = event.clientY - posY;
 
                     //限制拖动区域
                     var divMaxLeft = document.documentElement.clientWidth - oBox.clientWidth;
@@ -81,9 +81,9 @@
                 };
 
                 //阻止oA冒泡到oDrag导致鼠标按到oA拖动也触发拖动事件
-                oA.onmousedown = function(e){
-                    var e = event || window.event;
-                    e.cancelBubble = true;
+                oA.onmousedown = function(event){
+                    var event = event || window.event;
+                    event.cancelBubble = true;
                 };
 
                 //回放拖动的痕迹

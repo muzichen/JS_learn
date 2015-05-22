@@ -20,12 +20,12 @@
             //加载隐藏菜单
             oMenu.style.display = "none";
             //自定义菜单
-            document.oncontextmenu = function(e){
-                var e = event || window.event;
+            document.oncontextmenu = function(event){
+                var event = event || window.event;
                 var menuStyle = oMenu.style;
                 menuStyle.display = "block";
-                menuStyle.left = e.clientX + "px";
-                menuStyle.top = e.clientY + "px";
+                menuStyle.left = event.clientX + "px";
+                menuStyle.top = event.clientY + "px";
                 //取消右键菜单的默认行为
                 return false;
             };

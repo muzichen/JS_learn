@@ -8,10 +8,10 @@
     </style>
 </head>
 <script type="text/javascript">
-    document.onclick = function(e){
+    document.onclick = function(event){
         //alert(1);
-        var e = event || window.event;
-        alert("坐标是： [" + e.clientX + "," + e.clientY + "]");
+        var event = event || window.event;
+        alert("坐标是： [" + event.clientX + "," + event.clientY + "]");
     };
 </script>
 <body>

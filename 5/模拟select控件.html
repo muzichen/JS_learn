@@ -25,13 +25,13 @@
             var oUl = oSearch.getElementsByTagName("ul")[0];
             var aLi = oUl.getElementsByTagName("li");
             //var offOn = true;
-            oSpan.onclick = function(e){
+            oSpan.onclick = function(event){
                 //oUl.style.display = offOn ? "block" :"";
                 //offOn = !offOn;
                 oUl.style.display = oUl.style.display == "block" ? "none" : "block";
                 //阻止冒泡
-                e = event || window.event;
-                e.cancelBubble = true;
+                event = event || window.event;
+                event.cancelBubble = true;
             };
             for(var i = 0; i < aLi.length; i++){
                 aLi[i].onclick = function(){

@@ -23,10 +23,10 @@
                     this.className = "";
                     oBig.style.display = "none";
                 };
-                oImg.onmousemove = function(e){
-                    var e = event || window.event;
-                    var oLeft = e.clientX;
-                    var oTop = e.clientY;
+                oImg.onmousemove = function(event){
+                    var event = event || window.event;
+                    var oLeft = event.clientX;
+                    var oTop = event.clientY;
                     oBig.style.display = "block";
                     oBig.style.left = oLeft + 20 + "px";
                     oBig.style.top = oTop + 20 + "px";

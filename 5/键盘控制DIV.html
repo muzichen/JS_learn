@@ -25,11 +25,11 @@
                     }
                     limit();
                 },20);
-                document.onkeydown = function(e){
-                    var e = event || window.event;
-                    bCtrl = e.ctrlKey;
+                document.onkeydown = function(event){
+                    var event = event || window.event;
+                    bCtrl = event.ctrlKey;
 
-                    switch(e.keyCode){
+                    switch(event.keyCode){
                         case 37:
                             bLeft = true;
                             break;
@@ -81,9 +81,9 @@
                     //取消浏览器的默认行为
                     return false;
                 };
-                document.onkeyup = function(e){
-                    var e = event || window.event;
-                    switch(e.keyCode){
+                document.onkeyup = function(event){
+                    var event = event || window.event;
+                    switch(event.keyCode){
                         case 37:
                             bLeft = false;
                             break;

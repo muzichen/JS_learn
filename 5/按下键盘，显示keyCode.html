@@ -11,9 +11,9 @@
 <script type="text/javascript">
     window.onload = function(){
         var oP = document.getElementsByTagName("p")[0];
-        document.onkeydown = function(e){
-            e = event || window.event;
-            oP.innerHTML = e.keyCode;
+        document.onkeydown = function(event){
+            event = event || window.event;
+            oP.innerHTML = event.keyCode;
         };
     };
 </script>
