@@ -16,10 +16,13 @@
         #top .button a{width: 21px; height: 19px; display: inline-block; background: url(img/tool.png) no-repeat; text-indent: -999px;}
         #top .button a.min{background-position: -29px 0;}
         #top .button a.min:hover{background-position: -29px -29px;}
-        #top .button a.max{background-position: -60px 0;}
+        #top .button a.max{background-position: -60px 0;  }
         #top .button a.max:hover{background-position: -60px -29px;}
+        #top .button a.revert{background-position: -149px 0; display: none;}
+        #top .button a.revert:hover{background-position: -149px -29px;}
         #top .button a.close{background-position: -89px 0;}
         #top .button a.close:hover{background-position: -89px -29px;}
+        
         #bottom{font-size: 12px; line-height: 18px;}
 
         #box .br,#box .bl,#box .tl,#box .tr{width: 14px; height: 14px;position: absolute;}
@@ -171,9 +174,11 @@
                 var oBl = getByClass(oBox,"bl")[0];
                 var oTl = getByClass(oBox,"tl")[0];
                 var oMin = getByClass(oTop,"min")[0];
+                var oMax = getByClass(oTop,"max")[0];
+                var oRevert = getByClass(oTop,"revert")[0];
+                var oClose = getByClass(oTop,"close")[0];
                 document.onmousedown = null;
                 document.onmousemove = null;
-
                 //拖拽 
                 drag(oBox,oTop);
                 //拖动上下左右改变大小
@@ -183,7 +188,7 @@
                 reSize(oBox,oR,false,false);
 
                 //最小化
-                oMin.onclick = function(){
+                oMin.onclick = oClose.onclick = function(){
                     oBox.style.display = "none";
                     var oA = document.createElement("a");
                     oA.href = "javascript:;";
@@ -194,6 +199,25 @@
                         document.body.removeChild(this);
                     };
                 };
+
+                oMax.onclick = function(){
+                    oBox.style.top = oBox.style.left = 0;
+                    oBox.style.width = document.documentElement.clientWidth - 15 + "px";
+                    oBox.style.height = document.documentElement.clientHeight - 2 + "px";
+                    this.style.display = "none";
+                    oRevert.style.display = "block";
+                    
+                };
+                oRevert.onclick = function(){
+                    oBox.style.top = 0 + "px";
+                    oBox.style.left = 563 + "px";
+                    oBox.style.width = 288 + "px";
+                    oBox.style.height = 160 + "px";
+                    this.style.display = "none";
+                    oMax.style.display = "block";
+                };
+
+
 
 
 
@@ -209,6 +233,7 @@
             <div class="button">
                     <a href="javascript:;" class="min"></a>
                     <a href="javascript:;" class="max"></a>
+                    <a href="javascript:;" class="revert"></a>
                     <a href="javascript:;" class="close"></a>
             </div>
         </div>
