@@ -12,8 +12,8 @@
         #box{width: 288px; height: 160px; border: 1px solid #000; box-shadow: 0 2px 2px 2px #999;padding: 0 6px; background: #e9e9e9; position: absolute; left: 563px; top:0;}
         #top{height: 32px; border-bottom: 1px solid #a1b4b0; line-height: 32px; cursor: move;}
         #top h2{font-size: 14px; font-weight: 600; color:#000; float: left;}
-        #top .button{float:right;height: 32px; margin-top: 7px;}
-        #top .button a{width: 21px; height: 19px; display: inline-block; background: url(img/tool.png) no-repeat; text-indent: -999px;}
+        #top .button{float:right;height: 32px; margin-top: 7px; width: 79px;}
+        #top .button a{width: 21px; height: 19px; display: block; background: url(img/tool.png) no-repeat; text-indent: -999px; float: left; margin-left: 5px;}
         #top .button a.min{background-position: -29px 0;}
         #top .button a.min:hover{background-position: -29px -29px;}
         #top .button a.max{background-position: -60px 0;  }
@@ -99,7 +99,7 @@
                 };
             }
 
-            function reSize(obj,oHandler,isTop,isLeft){
+            function reSize(obj,oHandler,isTop,isLeft,lockX,lockY){
                 oHandler.onmousedown = function(event){
                     var event = event || window.event;
                     var disX = event.clientX;
@@ -108,14 +108,14 @@
                     var iHeight = obj.offsetHeight;
                     var iLeft = obj.offsetLeft;
                     var iWidth = obj.offsetWidth;
-                    var _this = this;
-                    var isTop = false;
                     document.onmousemove = function(event){
                         var event = event || window.event;
                         var newX = event.clientX;
                         var newY = event.clientY;
                         var iX = newX - disX;
                         var iY = newY - disY;
+                        var newHeight = 0;
+                        var newWidth = 0;
                         /*switch(_this){
                             case oT:
                                 iHeight < 110 && (iHeight = 110);
@@ -137,7 +137,9 @@
                                 break;
                         }*/
                         //当变换上边缘时既要修改box的top值也要修改height，而变换下边缘时则只需要修改height的值即可
-                        if(isTop){
+                        //isTop与lockX控制是只改变高度还是高度和宽度都改
+                        //isLeft与lockY控制只改变宽度还是高度和宽度都改
+                        /*if(isTop && lockX){
                             obj.style.top = iTop + iY + "px";
                             obj.style.height = iHeight - iY + "px";
                         }else{
@@ -148,7 +150,31 @@
                             obj.style.width = iWidth - iX + "px";
                         }else{
                             obj.style.width = iWidth + iX + "px";
+                        }*/
+
+                        isTop ? newHeight = iHeight - iY : newHeight = iHeight + iY;
+                        isLeft ? newWidth = iWidth - iX : newWidth = iHeight + iX;
+
+                        if(newHeight < minHeight) newHeight = minHeight;
+                        if(newWidth < minWidth) newWidth = minWidth;
+
+                        isTop ? obj.style.height = newHeight + "px" : obj.style.height = newHeight + "px";
+                        isTop && (obj.style.top = iTop + iY + "px");
+                        isLeft ? obj.style.width = newWidth + "px" : obj.style.width = newWidth + "px";
+                        isLeft && (obj.style.left = iLeft + iX + "px");
+
+                        lockX && (obj.style.width = iWidth + "px");
+                        lockY && (obj.style.height = iHeight + "px");
+
+                        //当isTop为true时newHeight减小到最小值时还可以改变top值，所以要限制这个地方
+                        if(isTop && newHeight == minHeight){
+                            document.onmousemove = null;
                         }
+                        if(isLeft && newWidth == minWidth){
+                            document.onmousemove = null;
+                        }
+
+                        return false;
 
                     }
                     return false;
@@ -161,7 +187,8 @@
                     return false;
                 };
             }
-
+            var minWidth = 288;
+            var minHeight = 160;
             window.onload = function(){
                 var oBox = document.getElementById("box");
                 var oTop = document.getElementById("top");
@@ -182,10 +209,15 @@
                 //拖拽 
                 drag(oBox,oTop);
                 //拖动上下左右改变大小
-                reSize(oBox,oT,true,false);
-                reSize(oBox,oB,false,false);
-                reSize(oBox,oL,false,true);
-                reSize(oBox,oR,false,false);
+                reSize(oBox,oT,true,false,true,false);
+                reSize(oBox,oB,false,false,true,false);
+                reSize(oBox,oL,false,true,false,true);
+                reSize(oBox,oR,false,false,false,true);
+                //拖动四角改变大小
+                reSize(oBox,oTr,true,false,false,false);
+                reSize(oBox,oBr,false,false,false,false);
+                reSize(oBox,oBl,false,true,false,false);
+                reSize(oBox,oTl,true,true,false,false);
 
                 //最小化
                 oMin.onclick = oClose.onclick = function(){
