@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>仿苹果菜单</title>
+    <style type="text/css">
+        body,div{margin: 0; padding: 0;}
+        #menu{position: absolute; bottom: 0; width: 100%; text-align: center;}
+    </style>
+    <script type="text/javascript">
+            window.onload = function(){
+                var oMenu =  document.getElementById("menu");
+                var aImg = oMenu.getElementsByTagName("img");
+                //var aWidth = [];
+                //初始化图标的大小并保存原图标的大小
+
+                document.onmousemove = function(event){
+                    var event = event || window.event;
+                    /*for(var i = 0;i < aImg.length; i++){
+                        //鼠标距离图片越近图片越大
+                        var a = event.clientX - aImg[i].offsetLeft - aImg[i].offsetWidth / 2;
+                        var b = event.clientY - oMenu.offsetTop - aImg[i].offsetHeight / 2;
+                        var iScale = 1 - Math.sqrt(a*a,b*b)/300;
+                        if(iScale < 0.5) iScale = 0.5;
+                        aImg[i].width = aWidth[i]*iScale;
+                    }*/
+                    //勾股定理
+                    //妙味课堂的方法
+                    function getDistance(obj){
+                        return Math.sqrt(
+                            Math.pow(event.clientX - obj.offsetLeft - oMenu.offsetLeft - obj.offsetWidth / 2,2) + Math.pow(event.clientY - oMenu.offsetTop - obj.offsetTop - obj.offsetHeight / 2,2)
+                        )
+                    }
+
+                    for(var i = 0; i < aImg.length; i++){
+                        var newWidth = getDistance(aImg[i]);
+                        var newWidth = Math.min(newWidth,300);
+                        var iScale = (300 - newWidth)/300;
+                        aImg[i].width = 64 * iScale + 64;
+                    }
+                }
+
+            };
+    </script>
+</head>
+<body>
+    <div id="menu">
+        <img src="img/1.png" width="64" />
+        <img src="img/2.png" width="64" />
+        <img src="img/3.png" width="64"/>
+        <img src="img/4.png" width="64" />
+        <img src="img/5.png" width="64" />
+        <img src="img/6.png" width="64" />
+        <img src="img/7.png" width="64" />
+        <img src="img/8.png" width="64" />
+    </div>
+</body>
+</html>
