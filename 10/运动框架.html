@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>运动框架</title>
+    <style>
+        div{margin: 0; padding: 0;}
+        #box{width: 600px; height: 100px; border: 1px solid #000; margin: 20px auto; position: relative;}
+        #box .innerBox{width: 30px; height: 30px; background-color: #333333; position: absolute; top: 10px; left: 10px;}
+    </style>
+    <script>
+        function getStyle(obj,attr){
+            return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj,null)[attr];
+        }
+        window.onload = function () {
+            var oBox = document.getElementById('box');
+            var oInnerBox = oBox.getElementsByTagName('div')[0];
+
+
+
+        }
+    </script>
+</head>
+<body>
+    <center><input type="button" value="开始"/></center>
+    <div id="box">
+        <div class="innerBox">
+
+        </div>
+    </div>
+</body>
+</html>

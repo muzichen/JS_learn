@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>为数组添加方法(求和和最大值)</title>
+    <style>
+        pre{
+            border: 1px dashed #333333;
+            background-color: #33FFCC;
+            padding: 5px;
+            color: #545454;
+        }
+    </style>
+    <script>
+        //求和
+        Array.prototype.sum = function () {
+            var sum = 0;
+            for(var i = 0;i < this.length; i++){
+                sum += parseInt(this[i]);
+            }
+            return sum;
+        }
+        //求最大值
+        Array.prototype.maxValue = function(){
+            var maxValue = Number.MIN_VALUE;
+            for(var i = 0;i < this.length;i++){
+                    if(parseInt(this[i]) > maxValue){
+                        maxValue = this[i];
+                    }
+            }
+            return maxValue;
+        }
+
+        var arr = [12,3,4,6,2,32];
+        console.log(arr.sum());
+        console.log(arr.maxValue());
+
+    </script>
+</head>
+<body>
+<pre>
+    &lt;script&gt;
+        //求和
+        Array.prototype.sum = function () {
+            var sum = 0;
+            for(var i = 0;i < this.length; i++){
+                sum += parseInt(this[i]);
+            }
+            return sum;
+        }
+        //求最大值
+        Array.prototype.maxValue = function(){
+            var maxValue = Number.MIN_VALUE;
+            for(var i = 0;i < this.length;i++){
+                if(parseInt(this[i]) > maxValue){
+                    maxValue = this[i];
+                }
+            }
+            return maxValue;
+        }
+
+        var arr = [12,3,4,6,2,32];
+        console.log(arr.sum());
+        console.log(arr.maxValue());
+
+    &lt;/script&gt;
+</pre>
+</body>
+</html>
